@@ -45,5 +45,12 @@
     "searchPlaceholder": "search destination",
     "featuredDestinations": "featured destinations",
     "noResults": "no destinations found"
+  },
+  "countryDetail": {
+    "language": "language",
+    "currency": "currency",
+    "mainCities": "main cities",
+    "topAttractions": "top attractions",
+    "planATrip": "plan a trip"
   }
 }

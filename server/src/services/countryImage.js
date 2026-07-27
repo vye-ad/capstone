@@ -1,8 +1,7 @@
 import { prisma } from '../lib/prisma.js';
 
 const PEXELS_SEARCH_URL = 'https://api.pexels.com/v1/search';
-// No real artwork sourced for this yet (task #18 will add one to client/public).
-const PLACEHOLDER_IMAGE_URL = '/images/placeholder-destination.jpg';
+const PLACEHOLDER_IMAGE_URL = '/images/placeholder-destination.svg';
 
 // §12.3 resolution order, never skipping a step and never throwing —
 // "never render a broken image" means every failure path falls through
