@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './lib/AuthContext.jsx';
 import Landing from './pages/Landing.jsx';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
@@ -12,21 +13,23 @@ import Admin from './pages/Admin.jsx';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/explore/:cca2" element={<CountryDetail />} />
-        <Route path="/trips" element={<MyTrips />} />
-        <Route path="/trips/new" element={<CreateEditTrip />} />
-        <Route path="/trips/:id/edit" element={<CreateEditTrip />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/explore/:cca2" element={<CountryDetail />} />
+          <Route path="/trips" element={<MyTrips />} />
+          <Route path="/trips/new" element={<CreateEditTrip />} />
+          <Route path="/trips/:id/edit" element={<CreateEditTrip />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

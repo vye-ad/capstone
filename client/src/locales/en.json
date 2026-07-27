@@ -1,0 +1,17 @@
+{
+  "landing": {
+    "wordmark": "expeditor",
+    "signIn": "sign in",
+    "signUp": "sign up"
+  },
+  "auth": {
+    "email": "email",
+    "password": "password",
+    "name": "name",
+    "country": "country",
+    "countryPlaceholder": "e.g. ca, jp, fr",
+    "enterAccount": "enter account",
+    "createAccount": "create account",
+    "invalidCredentials": "incorrect email or password"
+  }
+}
