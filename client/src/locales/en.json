@@ -1,9 +1,10 @@
 {
   "common": {
-    "signOut": "sign out"
+    "signOut": "sign out",
+    "back": "back",
+    "wordmark": "expeditor"
   },
   "landing": {
-    "wordmark": "expeditor",
     "signIn": "sign in",
     "signUp": "sign up"
   },
@@ -16,6 +17,14 @@
     "enterAccount": "enter account",
     "createAccount": "create account",
     "invalidCredentials": "incorrect email or password"
+  },
+  "pages": {
+    "explore": "explore",
+    "myTrips": "my trips",
+    "createTrip": "create trip",
+    "editTrip": "edit trip",
+    "profile": "profile",
+    "admin": "admin"
   },
   "home": {
     "nav": {
@@ -31,5 +40,10 @@
     "inDays_other": "in {{count}} days",
     "forDays_one": "for {{count}} day",
     "forDays_other": "for {{count}} days"
+  },
+  "explore": {
+    "searchPlaceholder": "search destination",
+    "featuredDestinations": "featured destinations",
+    "noResults": "no destinations found"
   }
 }

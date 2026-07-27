@@ -12,7 +12,7 @@ export default function Landing() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 text-center">
-      <h1 className="text-[32px] font-normal text-ink">{t('landing.wordmark')}</h1>
+      <h1 className="text-[32px] font-normal text-ink">{t('common.wordmark')}</h1>
       <StaticGlobe />
       <div className="flex flex-col gap-4">
         <Link to="/signin" className="text-ink underline">

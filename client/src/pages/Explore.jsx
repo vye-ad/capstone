@@ -1,3 +1,78 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import PageHeader from '../components/PageHeader.jsx';
+import StaticGlobe from '../components/StaticGlobe.jsx';
+import { listCountries } from '../lib/countries.js';
+
 export default function Explore() {
-  return <div>Explore</div>;
+  const { t } = useTranslation();
+  const [featured, setFeatured] = useState([]);
+  const [query, setQuery] = useState('');
+  // null = show featured list, array = show search results
+  const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    listCountries({ featured: 'true' })
+      .then((data) => setFeatured(data.countries))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults(null);
+      return;
+    }
+    const handle = setTimeout(() => {
+      listCountries({ q: query.trim() }).then((data) => setResults(data.countries));
+    }, 300);
+    return () => clearTimeout(handle);
+  }, [query]);
+
+  const list = results ?? featured;
+  const showingSearch = results !== null;
+
+  return (
+    <div className="min-h-screen px-4 py-6">
+      <PageHeader page={t('pages.explore')} />
+
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder={t('explore.searchPlaceholder')}
+        className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+      />
+
+      <div className="mt-8 flex gap-8">
+        <div className="flex-1">
+          {!showingSearch && <h2 className="mb-4 text-ink">{t('explore.featuredDestinations')}</h2>}
+          {loading ? null : list.length === 0 ? (
+            <p className="text-muted">{t('explore.noResults')}</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {list.map((country) => (
+                <Link
+                  key={country.cca2}
+                  to={`/explore/${country.cca2}`}
+                  className="flex items-center gap-2 text-ink"
+                >
+                  <img
+                    src={country.flagSvgUrl}
+                    alt={country.flagAlt ?? country.nameEn}
+                    className="h-4 w-6"
+                  />
+                  {country.nameEn}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="hidden md:block">
+          <StaticGlobe />
+        </div>
+      </div>
+    </div>
+  );
 }
