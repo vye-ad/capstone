@@ -920,37 +920,43 @@ Three third-party integrations, all proxied through Express. **No API key may re
 
 ### 12.1 REST Countries — seed-time only
 
-`https://restcountries.com/v3.1/`
+`[DEVIATION]` **This section originally targeted REST Countries v3.1.** As of this build, v3.1 is fully deprecated — every request returns `{ success: false, errors: [{ message: "This API version has been deprecated... migrate to v5" }] }`. Updated below for v5. Confirmed by developer decision on 2026-07-27 to migrate rather than substitute a different data source.
+
+`https://api.restcountries.com/countries/v5`
+
+**Requires authentication**, unlike v3.1. `Authorization: Bearer <key>` header or `?api_key=<key>` query param. The free tier needs a real account (name/email/password, no card) — the public demo key (`rc_live_demo`) does **not** return live data; it always returns one fixed example object regardless of the query, with a message to sign up for a real key. Store the real key as `REST_COUNTRIES_API_KEY` in `server/.env` — **never commit it, never let it reach the browser.**
 
 **Do not call this at request time.** Fetch the full dataset once in `server/prisma/seed.js` and write it into the `Country` table.
 
 Reasons: search becomes a fast, filterable SQL query; the app has no third-party dependency on the critical path; and ISO codes live in your own schema where you control them.
 
-Use the `?fields=` parameter to request only what is needed — the full payload is large.
+Free tier caps list responses at 100/page — paginate with `?limit=100&offset=`.
 
-Field mapping:
+Field mapping (v5 shape — nested under `data.objects[]` in the list/search response):
 
-| REST Countries | `Country` column |
+| REST Countries v5 | `Country` column |
 |---|---|
-| `cca2`, `cca3` | `cca2` (PK), `cca3` |
-| `name.common` | `nameEn` |
-| `translations.fra.common` | `nameFr` |
-| `translations.spa.common` | `nameEs` |
-| `name.official` | `officialName` |
-| `capital[0]` | `capital` |
+| `codes.alpha_2`, `codes.alpha_3` | `cca2` (PK), `cca3` |
+| `names.common` | `nameEn` |
+| `names.translations.fra.common` | `nameFr` |
+| `names.translations.spa.common` | `nameEs` |
+| `names.official` | `officialName` |
+| `capital[0].name` (or `capitals[0].name`) | `capital` |
 | `languages` | `languages` (Json) |
 | `currencies` (first key) | `currencyCode`, `currencyName`, `currencySymbol` |
 | `region`, `subregion` | `region`, `subregion` |
-| `latlng[0]`, `latlng[1]` | `latitude`, `longitude` |
-| `flags.svg`, `flags.png`, `flags.alt` | `flagSvgUrl`, `flagPngUrl`, `flagAlt` |
+| `coordinates.lat`, `coordinates.lng` | `latitude`, `longitude` |
+| `flag.url_svg`, `flag.url_png`, `flag.description` | `flagSvgUrl`, `flagPngUrl`, `flagAlt` |
 | `timezones` | `timezones` |
-| `car.side` | `drivingSide` |
-| `idd.root` + `idd.suffixes[0]` | `callingCode` |
+| `cars.driving_side` | `drivingSide` |
+| `calling_codes` | `callingCode` |
 | `borders` | `borders` |
-| `population`, `area` | `population`, `area` |
-| `maps.googleMaps` | `googleMapsUrl` |
+| `population`, `area.kilometers` | `population`, `area` |
+| `links.google_maps` | `googleMapsUrl` |
 
-> **Before writing the seed script, fetch one country and print the raw object.** The field names above are from documentation, not a live response, and the v3.1 shape has changed before. Verify against reality rather than trusting this table.
+> **Before writing the seed script, fetch one real country (not the demo key) and print the raw object.** This table was built from the v5 docs page plus one demo-key response, neither of which is a guaranteed-accurate live query result — treat it as a hypothesis to verify once a real API key exists, exactly as the original v3.1 table turned out to need.
+
+**Flags do not need the authenticated API at all** — `https://flags.restcountries.com/v5/w{width}/{code}.{format}` is a free, keyless CDN (widths w160–w2560, formats png/jpg/gif/svg). Prefer this over `flag.url_svg` from the authenticated response to keep flag rendering off the paid/rate-limited path.
 
 Some countries lack a capital, currency, or translations. Handle nulls — do not let one malformed record abort the seed.
 

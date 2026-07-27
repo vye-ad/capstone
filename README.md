@@ -60,7 +60,8 @@ cp client/.env.example client/.env
 
 `server/.env` needs a running Postgres instance for `DATABASE_URL`, a
 `JWT_SECRET`, and API keys for Cloudinary / Pexels / an exchange rate
-provider. `client/.env` only needs the backend's base URL.
+provider / REST Countries (v5 requires a free account — see
+`DEVELOPMENT.md` §12.1). `client/.env` only needs the backend's base URL.
 
 ### Migrate and seed
 
@@ -96,7 +97,7 @@ field.
 
 | Resource | Used for | Link |
 |---|---|---|
-| REST Countries API | Country reference data | https://restcountries.com |
+| REST Countries API (v5) | Country reference data | https://restcountries.com |
 | Pexels API | Destination image fallback | https://www.pexels.com/api/ |
 | Cloudinary | Image storage and transformation | https://cloudinary.com |
 | Exchange rate provider | Currency conversion | TBD |
