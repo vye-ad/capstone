@@ -5,6 +5,7 @@ import { useAuth } from '../lib/AuthContext.jsx';
 import { registerSchema } from '../schemas/auth.js';
 import { zodFieldErrors } from '../lib/zodFieldErrors.js';
 import StaticGlobe from '../components/StaticGlobe.jsx';
+import CountrySelect from '../components/CountrySelect.jsx';
 
 export default function SignUp() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const payload = { name, email, password, countryCode: countryCode.toUpperCase() };
+    const payload = { name, email, password, countryCode };
     const parsed = registerSchema.safeParse(payload);
     if (!parsed.success) {
       setFieldErrors(zodFieldErrors(parsed.error));
@@ -76,18 +77,11 @@ export default function SignUp() {
           {fieldErrors.password && <p className="text-sm text-danger">{fieldErrors.password}</p>}
         </label>
         <label className="flex flex-col gap-1">
-          {/*
-            §10.3 wants a searchable select backed by GET /countries, which
-            doesn't exist until week 2 (§15). Plain 2-letter code input for
-            now; swap this out once that endpoint lands.
-          */}
-          <input
-            type="text"
+          <CountrySelect
+            id="countryCode"
             value={countryCode}
-            onChange={(e) => setCountryCode(e.target.value)}
-            placeholder={t('auth.countryPlaceholder')}
-            maxLength={2}
-            className="border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+            onChange={setCountryCode}
+            placeholder={t('auth.country')}
           />
           {fieldErrors.countryCode && (
             <p className="text-sm text-danger">{fieldErrors.countryCode}</p>

@@ -508,10 +508,12 @@ Validation:
 
 ### Countries
 
+`[DEVIATION]` **Both endpoints below are public (`—`), not `user`.** Originally speced as authenticated; corrected after building Sign Up (§10.3), which needs the searchable country select *before* the user is authenticated — a `user`-gated endpoint made that select silently fail with 401. Country reference data (names/flags/currencies) isn't sensitive, so there's no security reason to gate it.
+
 | Method | Path | Auth | Query | Success |
 |---|---|---|---|---|
-| GET | `/countries` | user | `?featured=true` or `?q=<search>` or `?region=<region>` | `200 { countries: [] }` |
-| GET | `/countries/:cca2` | user | — | `200 { country }` |
+| GET | `/countries` | — | `?featured=true` or `?q=<search>` or `?region=<region>` | `200 { countries: [] }` |
+| GET | `/countries/:cca2` | — | — | `200 { country }` |
 
 - `?featured=true` returns the 8 featured destinations for the Explore landing view.
 - `?q=` searches `nameEn`, `nameFr`, `nameEs` case-insensitively. This satisfies the mandatory search requirement.

@@ -2,7 +2,9 @@
   "common": {
     "signOut": "sign out",
     "back": "back",
-    "wordmark": "expeditor"
+    "wordmark": "expeditor",
+    "cancel": "cancel",
+    "confirmDiscard": "discard unsaved changes?"
   },
   "landing": {
     "signIn": "sign in",
@@ -13,7 +15,6 @@
     "password": "password",
     "name": "name",
     "country": "country",
-    "countryPlaceholder": "e.g. ca, jp, fr",
     "enterAccount": "enter account",
     "createAccount": "create account",
     "invalidCredentials": "incorrect email or password"
@@ -52,5 +53,34 @@
     "mainCities": "main cities",
     "topAttractions": "top attractions",
     "planATrip": "plan a trip"
+  },
+  "createTrip": {
+    "chooseDestination": "choose destination",
+    "startDay": "start day",
+    "endDay": "end day",
+    "status": "status",
+    "budget": "budget",
+    "tripDetails": "trip details",
+    "transportType": "transport type",
+    "accommodationDetails": "accommodation details",
+    "accommodationType": "accommodation type",
+    "notes": "notes",
+    "submit": "submit",
+    "status_UPCOMING": "upcoming",
+    "status_ONGOING": "ongoing",
+    "status_COMPLETED": "completed",
+    "transport_PLANE": "plane",
+    "transport_TRAIN": "train",
+    "transport_CAR": "car",
+    "transport_BUS": "bus",
+    "transport_FERRY": "ferry",
+    "transport_OTHER": "other",
+    "accommodation_HOTEL": "hotel",
+    "accommodation_HOSTEL": "hostel",
+    "accommodation_APARTMENT": "apartment",
+    "accommodation_GUESTHOUSE": "guesthouse",
+    "accommodation_CAMPING": "camping",
+    "accommodation_FRIENDS": "friends",
+    "accommodation_OTHER": "other"
   }
 }
