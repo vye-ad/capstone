@@ -122,7 +122,12 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 PEXELS_API_KEY=
 EXCHANGE_RATE_API_KEY=
+REST_COUNTRIES_API_KEY=
+SEED_ADMIN_EMAIL=
+SEED_ADMIN_PASSWORD=
 ```
+
+`REST_COUNTRIES_API_KEY`, `SEED_ADMIN_EMAIL`, and `SEED_ADMIN_PASSWORD` were missing from this list originally — added here since §12.1 (v5 auth) and §12.2 (seed admin) both require them and this is the single source of truth for env vars.
 
 `client/.env`:
 
@@ -932,7 +937,7 @@ Reasons: search becomes a fast, filterable SQL query; the app has no third-party
 
 Free tier caps list responses at 100/page — paginate with `?limit=100&offset=`.
 
-Field mapping (v5 shape — nested under `data.objects[]` in the list/search response):
+Field mapping — **verified 2026-07-27 against live `/countries/v5` responses with a real API key** (Japan and France), not just the docs page:
 
 | REST Countries v5 | `Country` column |
 |---|---|
@@ -941,20 +946,20 @@ Field mapping (v5 shape — nested under `data.objects[]` in the list/search res
 | `names.translations.fra.common` | `nameFr` |
 | `names.translations.spa.common` | `nameEs` |
 | `names.official` | `officialName` |
-| `capital[0].name` (or `capitals[0].name`) | `capital` |
-| `languages` | `languages` (Json) |
-| `currencies` (first key) | `currencyCode`, `currencyName`, `currencySymbol` |
+| `capitals[0].name` | `capital` (note: plural `capitals`, an array of `{name, coordinates, attributes}`) |
+| `languages` (array of `{iso639_2t, name, ...}`) | `languages` (Json) — remap to `{ [iso639_2t]: name }` to match the `{ "jpn": "Japanese" }` shape in §6 |
+| `currencies[0].code/name/symbol` | `currencyCode`, `currencyName`, `currencySymbol` — **`currencies` is an array of objects, not a keyed dict like v3.1** |
 | `region`, `subregion` | `region`, `subregion` |
 | `coordinates.lat`, `coordinates.lng` | `latitude`, `longitude` |
 | `flag.url_svg`, `flag.url_png`, `flag.description` | `flagSvgUrl`, `flagPngUrl`, `flagAlt` |
 | `timezones` | `timezones` |
 | `cars.driving_side` | `drivingSide` |
-| `calling_codes` | `callingCode` |
-| `borders` | `borders` |
+| `calling_codes[0]` (array, e.g. `["81"]`) | `callingCode` — store as `"+81"` |
+| `borders` (array of alpha_3 codes, e.g. `["AND","BEL",...]`, `[]` if none) | `borders` |
 | `population`, `area.kilometers` | `population`, `area` |
 | `links.google_maps` | `googleMapsUrl` |
 
-> **Before writing the seed script, fetch one real country (not the demo key) and print the raw object.** This table was built from the v5 docs page plus one demo-key response, neither of which is a guaranteed-accurate live query result — treat it as a hypothesis to verify once a real API key exists, exactly as the original v3.1 table turned out to need.
+**Verified gotcha the docs page didn't mention:** the full list (254 entries) includes unrecognized/disputed territories — Abkhazia, Northern Cyprus, Somaliland, South Ossetia — with `codes.alpha_2` as an **empty string**, not absent. Since `cca2` is our primary key, **skip any entry where `codes.alpha_2` is falsy** before upserting. This affects exactly 4 of 254 entries; everything else (including non-UN-member territories like Hong Kong that still hold real ISO codes) is fine to keep.
 
 **Flags do not need the authenticated API at all** — `https://flags.restcountries.com/v5/w{width}/{code}.{format}` is a free, keyless CDN (widths w160–w2560, formats png/jpg/gif/svg). Prefer this over `flag.url_svg` from the authenticated response to keep flag rendering off the paid/rate-limited path.
 
