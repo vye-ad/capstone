@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './lib/AuthContext.jsx';
+import RequireAuth from './components/RequireAuth.jsx';
 import Landing from './pages/Landing.jsx';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
@@ -19,14 +20,70 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/explore/:cca2" element={<CountryDetail />} />
-          <Route path="/trips" element={<MyTrips />} />
-          <Route path="/trips/new" element={<CreateEditTrip />} />
-          <Route path="/trips/:id/edit" element={<CreateEditTrip />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/home"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/explore"
+            element={
+              <RequireAuth>
+                <Explore />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/explore/:cca2"
+            element={
+              <RequireAuth>
+                <CountryDetail />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/trips"
+            element={
+              <RequireAuth>
+                <MyTrips />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/trips/new"
+            element={
+              <RequireAuth>
+                <CreateEditTrip />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/trips/:id/edit"
+            element={
+              <RequireAuth>
+                <CreateEditTrip />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <RequireAuth>
+                <Admin />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

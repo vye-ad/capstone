@@ -1,4 +1,7 @@
 {
+  "common": {
+    "signOut": "sign out"
+  },
   "landing": {
     "wordmark": "expeditor",
     "signIn": "sign in",
@@ -13,5 +16,20 @@
     "enterAccount": "enter account",
     "createAccount": "create account",
     "invalidCredentials": "incorrect email or password"
+  },
+  "home": {
+    "nav": {
+      "profile": "profile",
+      "explore": "explore",
+      "myTrips": "my trips"
+    },
+    "welcomeBack": "welcome back {{name}}",
+    "upcomingTrips": "upcoming trips",
+    "noUpcomingTrips": "no upcoming trips yet",
+    "planATrip": "plan a trip",
+    "inDays_one": "in {{count}} day",
+    "inDays_other": "in {{count}} days",
+    "forDays_one": "for {{count}} day",
+    "forDays_other": "for {{count}} days"
   }
 }
