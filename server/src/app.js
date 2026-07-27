@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.js';
 import tripsRouter from './routes/trips.js';
+import countriesRouter from './routes/countries.js';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/trips', tripsRouter);
+app.use('/api/countries', countriesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'not_found' });
