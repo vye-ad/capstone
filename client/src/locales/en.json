@@ -82,5 +82,19 @@
     "accommodation_CAMPING": "camping",
     "accommodation_FRIENDS": "friends",
     "accommodation_OTHER": "other"
+  },
+  "myTrips": {
+    "date": "date",
+    "destination": "destination",
+    "status": "status",
+    "budget": "budget",
+    "actions": "actions",
+    "edit": "edit",
+    "delete": "delete",
+    "empty": "you have no trips yet",
+    "filter_all": "all",
+    "filter_upcoming": "upcoming",
+    "filter_ongoing": "ongoing",
+    "filter_completed": "completed"
   }
 }
