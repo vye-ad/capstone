@@ -95,6 +95,8 @@
     "filter_all": "all",
     "filter_upcoming": "upcoming",
     "filter_ongoing": "ongoing",
-    "filter_completed": "completed"
+    "filter_completed": "completed",
+    "deleteConfirm": "delete your trip to {{country}}?",
+    "deleteWarning": "this cannot be undone."
   }
 }
