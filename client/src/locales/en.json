@@ -112,6 +112,10 @@
     "country": "country",
     "memberSince": "member since",
     "editProfile": "edit profile",
-    "changePassword": "change password"
+    "changePassword": "change password",
+    "save": "save",
+    "currentPassword": "current password",
+    "newPassword": "new password",
+    "passwordChanged": "password changed — signing you out"
   }
 }
