@@ -98,5 +98,20 @@
     "filter_completed": "completed",
     "deleteConfirm": "delete your trip to {{country}}?",
     "deleteWarning": "this cannot be undone."
+  },
+  "profile": {
+    "uploadPicture": "upload picture",
+    "travelStatistics": "travel statistics",
+    "totalTrips": "total trips",
+    "completedTrips": "completed trips",
+    "ongoingTrips": "ongoing trips",
+    "upcomingTrips": "upcoming trips",
+    "countriesVisited": "countries visited",
+    "name": "name",
+    "email": "email",
+    "country": "country",
+    "memberSince": "member since",
+    "editProfile": "edit profile",
+    "changePassword": "change password"
   }
 }
