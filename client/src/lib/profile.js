@@ -15,3 +15,13 @@ export function changePassword(data) {
 export function getStats() {
   return apiFetch('/api/profile/stats');
 }
+
+export function uploadAvatar(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  return apiFetch('/api/profile/avatar', { method: 'POST', body: formData });
+}
+
+export function deleteAvatar() {
+  return apiFetch('/api/profile/avatar', { method: 'DELETE' });
+}

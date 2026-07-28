@@ -116,6 +116,9 @@
     "save": "save",
     "currentPassword": "current password",
     "newPassword": "new password",
-    "passwordChanged": "password changed — signing you out"
+    "removePicture": "remove picture",
+    "avatarInvalidType": "must be a jpeg, png, or webp image",
+    "avatarTooLarge": "image must be under 5MB",
+    "avatarUploadFailed": "upload failed — try again"
   }
 }

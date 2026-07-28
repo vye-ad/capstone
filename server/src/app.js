@@ -9,7 +9,11 @@ import profileRouter from './routes/profile.js';
 
 const app = express();
 
-app.use(helmet());
+// HSTS tells browsers to force HTTPS for this origin on future requests.
+// Sending it over plain HTTP in dev can make the browser try to upgrade
+// a later request to https://localhost and fail outright (no TLS listener
+// there) — same reasoning as the cookie's secure flag being prod-only.
+app.use(helmet({ hsts: process.env.NODE_ENV === 'production' }));
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN,

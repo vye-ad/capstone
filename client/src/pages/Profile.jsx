@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import Modal from '../components/Modal.jsx';
 import CountrySelect from '../components/CountrySelect.jsx';
 import { useAuth } from '../lib/AuthContext.jsx';
-import { getStats, updateProfile, changePassword } from '../lib/profile.js';
+import { getStats, updateProfile, changePassword, uploadAvatar, deleteAvatar } from '../lib/profile.js';
 import { getCountry } from '../lib/countries.js';
 import { updateProfileSchema, changePasswordSchema } from '../schemas/profile.js';
 import { zodFieldErrors } from '../lib/zodFieldErrors.js';
+
+const ALLOWED_AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 
 function formatMemberSince(iso) {
   return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
@@ -31,6 +34,10 @@ export default function Profile() {
   const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '' });
   const [passwordFieldErrors, setPasswordFieldErrors] = useState({});
   const [changingPassword, setChangingPassword] = useState(false);
+
+  const fileInputRef = useRef(null);
+  const [avatarError, setAvatarError] = useState(null);
+  const [avatarBusy, setAvatarBusy] = useState(false);
 
   useEffect(() => {
     getStats().then((data) => setStats(data.stats));
@@ -87,16 +94,83 @@ export default function Profile() {
     }
   }
 
+  async function handleAvatarFileChange(e) {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+
+    if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
+      setAvatarError(t('profile.avatarInvalidType'));
+      return;
+    }
+    if (file.size > MAX_AVATAR_SIZE) {
+      setAvatarError(t('profile.avatarTooLarge'));
+      return;
+    }
+
+    setAvatarError(null);
+    setAvatarBusy(true);
+    try {
+      const data = await uploadAvatar(file);
+      setUser((u) => ({ ...u, avatarUrl: data.avatarUrl }));
+    } catch {
+      setAvatarError(t('profile.avatarUploadFailed'));
+    } finally {
+      setAvatarBusy(false);
+    }
+  }
+
+  async function handleRemoveAvatar() {
+    setAvatarBusy(true);
+    try {
+      await deleteAvatar();
+      setUser((u) => ({ ...u, avatarUrl: null, avatarPublicId: null }));
+    } finally {
+      setAvatarBusy(false);
+    }
+  }
+
   return (
     <div className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.profile')} />
 
       <div className="mt-6 flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col items-center gap-2 md:items-start">
-          <div role="presentation" className="h-24 w-24 rounded-full border border-hairline" />
-          <button type="button" className="text-ink underline">
+          {user.avatarUrl ? (
+            <img
+              src={user.avatarUrl}
+              alt=""
+              className="h-24 w-24 rounded-full border border-hairline object-cover"
+            />
+          ) : (
+            <div role="presentation" className="h-24 w-24 rounded-full border border-hairline" />
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleAvatarFileChange}
+            className="hidden"
+          />
+          <button
+            type="button"
+            disabled={avatarBusy}
+            onClick={() => fileInputRef.current.click()}
+            className="text-ink underline disabled:opacity-50"
+          >
             {t('profile.uploadPicture')}
           </button>
+          {user.avatarUrl && (
+            <button
+              type="button"
+              disabled={avatarBusy}
+              onClick={handleRemoveAvatar}
+              className="text-muted underline disabled:opacity-50"
+            >
+              {t('profile.removePicture')}
+            </button>
+          )}
+          {avatarError && <p className="text-sm text-danger">{avatarError}</p>}
 
           <div className="mt-6">
             <h2 className="text-ink">{t('profile.travelStatistics')}</h2>

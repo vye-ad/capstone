@@ -1,9 +1,13 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function apiFetch(path, options = {}) {
+  // FormData needs the browser to set its own multipart boundary header —
+  // forcing application/json here would break file uploads.
+  const isFormData = options.body instanceof FormData;
+
   const res = await fetch(`${BASE_URL}${path}`, {
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: isFormData ? { ...options.headers } : { 'Content-Type': 'application/json', ...options.headers },
     ...options,
   });
 
