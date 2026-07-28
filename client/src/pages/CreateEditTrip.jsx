@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import CountrySelect from '../components/CountrySelect.jsx';
 import { useAuth } from '../lib/AuthContext.jsx';
-import { createTrip } from '../lib/trips.js';
+import { createTrip, getTrip, updateTrip } from '../lib/trips.js';
 import { deriveStatus } from '../lib/tripStatus.js';
 import {
   tripCreateSchema,
+  tripUpdateSchema,
   SUPPORTED_CURRENCIES,
   TRANSPORT_TYPES,
   ACCOMMODATION_TYPES,
@@ -31,6 +32,8 @@ export default function CreateEditTrip() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
   const [searchParams] = useSearchParams();
 
   const [form, setForm] = useState({
@@ -38,18 +41,47 @@ export default function CreateEditTrip() {
     countryCode: searchParams.get('country') ?? '',
     budgetCurrency: user?.currency ?? '',
   });
-  const [statusTouched, setStatusTouched] = useState(false);
+  const [loading, setLoading] = useState(isEditMode);
+  // §7: an edit shouldn't reset statusIsManual unless the user actually
+  // touches the status radio during THIS edit. If the trip was already a
+  // manual override before this edit, don't auto-preview a derived value
+  // either — that would show something the save won't actually apply.
+  const [statusManuallySet, setStatusManuallySet] = useState(false);
+  const [initialStatusIsManual, setInitialStatusIsManual] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [dirty, setDirty] = useState(false);
 
+  useEffect(() => {
+    if (!isEditMode) return;
+    getTrip(id)
+      .then((data) => {
+        const trip = data.trip;
+        setForm({
+          countryCode: trip.countryCode,
+          startDate: trip.startDate.slice(0, 10),
+          endDate: trip.endDate.slice(0, 10),
+          status: trip.status,
+          budgetAmount: String(trip.budgetAmount),
+          budgetCurrency: trip.budgetCurrency,
+          transportType: trip.transportType ?? '',
+          accommodationType: trip.accommodationType ?? '',
+          notes: trip.notes ?? '',
+        });
+        setInitialStatusIsManual(trip.statusIsManual);
+      })
+      .catch(() => navigate('/trips'))
+      .finally(() => setLoading(false));
+  }, [id, isEditMode, navigate]);
+
   const derivedStatus = deriveStatus(form.startDate, form.endDate);
+  const autoSyncStatus = !statusManuallySet && !initialStatusIsManual;
 
   useEffect(() => {
-    if (!statusTouched && derivedStatus) {
+    if (autoSyncStatus && derivedStatus) {
       setForm((f) => ({ ...f, status: derivedStatus }));
     }
-  }, [derivedStatus, statusTouched]);
+  }, [derivedStatus, autoSyncStatus]);
 
   function setField(key, value) {
     setDirty(true);
@@ -68,7 +100,6 @@ export default function CreateEditTrip() {
       countryCode: form.countryCode,
       startDate: form.startDate,
       endDate: form.endDate,
-      status: form.status,
       budgetAmount: form.budgetAmount === '' ? undefined : Number(form.budgetAmount),
       budgetCurrency: form.budgetCurrency,
       transportType: form.transportType || undefined,
@@ -76,7 +107,15 @@ export default function CreateEditTrip() {
       notes: form.notes || undefined,
     };
 
-    const parsed = tripCreateSchema.safeParse(payload);
+    // Create always sends status (required); edit only sends it when the
+    // user actually chose one this session, so an edit that never touches
+    // status can't flip statusIsManual (§7).
+    if (!isEditMode || statusManuallySet) {
+      payload.status = form.status;
+    }
+
+    const schema = isEditMode ? tripUpdateSchema : tripCreateSchema;
+    const parsed = schema.safeParse(payload);
     if (!parsed.success) {
       setFieldErrors(zodFieldErrors(parsed.error));
       return;
@@ -85,7 +124,11 @@ export default function CreateEditTrip() {
 
     setSubmitting(true);
     try {
-      await createTrip(parsed.data);
+      if (isEditMode) {
+        await updateTrip(id, parsed.data);
+      } else {
+        await createTrip(parsed.data);
+      }
       navigate('/trips');
     } catch (err) {
       setFieldErrors(err.fields ?? {});
@@ -94,9 +137,11 @@ export default function CreateEditTrip() {
     }
   }
 
+  if (loading) return null;
+
   return (
     <div className="min-h-screen px-4 py-6">
-      <PageHeader page={t('pages.createTrip')} />
+      <PageHeader page={t(isEditMode ? 'pages.editTrip' : 'pages.createTrip')} />
 
       <form onSubmit={handleSubmit}>
         <div className="mt-6 flex flex-col gap-8 md:flex-row">
@@ -146,7 +191,7 @@ export default function CreateEditTrip() {
                     value={s}
                     checked={form.status === s}
                     onChange={() => {
-                      setStatusTouched(true);
+                      setStatusManuallySet(true);
                       setField('status', s);
                     }}
                   />
