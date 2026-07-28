@@ -4,7 +4,7 @@ A personal trip planner. Browse country destinations, then create, track,
 edit, and delete your own trips — bilingual-plus (English, French, Spanish)
 and multi-currency. Built as a solo, 4-week capstone project.
 
-> **Status:** in progress (Week 1). This README will be filled in as work
+> **Status:** in progress (Week 2). This README will be filled in as work
 > lands — see the sections marked TODO below.
 
 ## Screenshots
@@ -83,9 +83,16 @@ cd client && npm run dev
 
 ## API overview
 
-TODO — once endpoints exist, link the generated Postman collection at
-`postman/expeditor.postman_collection.json` here. See `DEVELOPMENT.md` §8
-for the full endpoint reference in the meantime.
+Import `postman/expeditor.postman_collection.json` plus the
+`local-user`/`local-admin` environment files into Postman to exercise the
+API directly. `local-user` already has working demo credentials (seeded by
+`prisma db seed`); `local-admin`'s email/password are left blank in the
+committed file — fill them in yourself from your own `server/.env`'s
+`SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD` rather than committing them.
+See `DEVELOPMENT.md` §8 for the full endpoint reference.
+
+The collection currently covers Auth, Trips, and Countries — Profile,
+Rates, and Admin will be added as those endpoints land.
 
 ## Database schema
 

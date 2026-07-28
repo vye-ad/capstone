@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "expeditor",
+    "description": "Generated from DEVELOPMENT.md §8. When a route changes, update §8 first, then this collection. Requests are ordered so running the whole collection top-to-bottom works: Register/Login first, Logout last.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "tripId", "value": "" },
+    { "key": "cca2", "value": "JP" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New User\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"countryCode\": \"CA\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Trips",
+      "item": [
+        {
+          "name": "List Trips",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/trips", "host": ["{{baseUrl}}"], "path": ["trips"] }
+          },
+          "response": []
+        },
+        {
+          "name": "List Trips (filtered by status)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/trips?status=upcoming",
+              "host": ["{{baseUrl}}"],
+              "path": ["trips"],
+              "query": [{ "key": "status", "value": "upcoming" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Trip",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const body = pm.response.json();",
+                  "  pm.collectionVariables.set('tripId', body.trip.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/trips", "host": ["{{baseUrl}}"], "path": ["trips"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"countryCode\": \"JP\",\n  \"startDate\": \"2027-05-10\",\n  \"endDate\": \"2027-05-17\",\n  \"status\": \"UPCOMING\",\n  \"budgetAmount\": 5000.00,\n  \"budgetCurrency\": \"CAD\",\n  \"transportType\": \"PLANE\",\n  \"accommodationType\": \"HOSTEL\",\n  \"notes\": \"created from Postman\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Trip",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/trips/{{tripId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["trips", "{{tripId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Trip",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/trips/{{tripId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["trips", "{{tripId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"budgetAmount\": 6000.00\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Trip",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/trips/{{tripId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["trips", "{{tripId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Countries",
+      "item": [
+        {
+          "name": "List Countries",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/countries", "host": ["{{baseUrl}}"], "path": ["countries"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Featured",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/countries?featured=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["countries"],
+              "query": [{ "key": "featured", "value": "true" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/countries?q=japan",
+              "host": ["{{baseUrl}}"],
+              "path": ["countries"],
+              "query": [{ "key": "q", "value": "japan" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by region",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/countries?region=Europe",
+              "host": ["{{baseUrl}}"],
+              "path": ["countries"],
+              "query": [{ "key": "region", "value": "Europe" }]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detail",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/countries/{{cca2}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["countries", "{{cca2}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+      },
+      "response": []
+    }
+  ]
+}
