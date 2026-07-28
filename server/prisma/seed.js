@@ -169,10 +169,74 @@ async function seedAdmin() {
   console.log(`Seeded admin user (${email}).`);
 }
 
+const DEMO_USER = {
+  email: 'demo@expeditor.dev',
+  password: 'demopassword123',
+  name: 'Demo User',
+  countryCode: 'FR',
+};
+
+function daysFromNow(n) {
+  return new Date(Date.now() + n * 24 * 60 * 60 * 1000);
+}
+
+// §12.2 point 4: optional demo regular user with a few trips, for
+// screenshots/testing and to give the Postman "local-user" environment
+// (§16) real, non-admin credentials.
+async function seedDemoUser() {
+  const passwordHash = await bcrypt.hash(DEMO_USER.password, 12);
+
+  const user = await prisma.user.upsert({
+    where: { email: DEMO_USER.email },
+    create: {
+      name: DEMO_USER.name,
+      email: DEMO_USER.email,
+      passwordHash,
+      countryCode: DEMO_USER.countryCode,
+    },
+    update: { passwordHash },
+  });
+
+  const existingTrips = await prisma.trip.count({ where: { userId: user.id } });
+  if (existingTrips === 0) {
+    await prisma.trip.createMany({
+      data: [
+        {
+          userId: user.id,
+          countryCode: 'JP',
+          startDate: daysFromNow(30),
+          endDate: daysFromNow(37),
+          status: 'UPCOMING',
+          budgetAmount: 4500,
+          budgetCurrency: 'EUR',
+          transportType: 'PLANE',
+          accommodationType: 'HOSTEL',
+          notes: 'demo trip for screenshots',
+        },
+        {
+          userId: user.id,
+          countryCode: 'IT',
+          startDate: daysFromNow(-180),
+          endDate: daysFromNow(-173),
+          status: 'COMPLETED',
+          budgetAmount: 2200,
+          budgetCurrency: 'EUR',
+          transportType: 'TRAIN',
+          accommodationType: 'APARTMENT',
+          notes: 'demo trip for screenshots',
+        },
+      ],
+    });
+  }
+
+  console.log(`Seeded demo user (${DEMO_USER.email}).`);
+}
+
 async function main() {
   await seedCountries();
   await seedFeaturedContent();
   await seedAdmin();
+  await seedDemoUser();
 }
 
 main()
