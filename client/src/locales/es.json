@@ -4,7 +4,8 @@
     "back": "atrás",
     "wordmark": "expeditor",
     "cancel": "cancelar",
-    "confirmDiscard": "¿descartar los cambios sin guardar?"
+    "confirmDiscard": "¿descartar los cambios sin guardar?",
+    "staleRate": "el tipo de cambio podría estar desactualizado"
   },
   "landing": {
     "signIn": "iniciar sesión",

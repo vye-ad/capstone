@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { localizedCountryName } from '../lib/countryName.js';
+import { useAuth } from '../lib/AuthContext.jsx';
+import { useRates } from '../lib/useRates.js';
+import { convertAmount, formatCurrency } from '../lib/currency.js';
 
 const STATUS_DOT_CLASS = {
   UPCOMING: 'bg-status-upcoming',
@@ -19,6 +22,11 @@ function formatDate(iso, locale) {
 
 export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const { rates } = useRates();
+
+  const convertedBudget = convertAmount(trip.budgetAmount, trip.budgetCurrency, user.currency, rates);
+  const formattedBudget = formatCurrency(convertedBudget, user.currency, i18n.language);
 
   return (
     <div className="rounded-pill border border-hairline px-4 py-3">
@@ -34,14 +42,7 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
           <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
           {t(`createTrip.status_${trip.status}`)}
         </span>
-        {/*
-          §10.8 wants this converted to the user's currency via the cached
-          exchange rate — deferred to the currency task (needs GET /api/rates).
-        */}
-        <span className="text-ink">
-          {trip.budgetCurrency}
-          {trip.budgetAmount}
-        </span>
+        <span className="text-ink">{formattedBudget}</span>
         <span className="flex gap-4 text-muted">
           <Link to={`/trips/${trip.id}/edit`}>{t('myTrips.edit')}</Link>
           <button type="button" onClick={onDeleteClick}>
@@ -77,9 +78,7 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
             </div>
             <div>
               <p className="text-muted">{t('createTrip.budget')}</p>
-              <p className="text-muted">
-                {trip.budgetCurrency} {trip.budgetAmount}
-              </p>
+              <p className="text-muted">{formattedBudget}</p>
             </div>
           </div>
 

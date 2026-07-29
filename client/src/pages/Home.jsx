@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { listTrips } from '../lib/trips.js';
-import LocaleSwitcher from '../components/LocaleSwitcher.jsx';
+import LocaleCurrencySwitcher from '../components/LocaleCurrencySwitcher.jsx';
 import { localizedCountryName } from '../lib/countryName.js';
 
 function todayUTC() {
@@ -54,7 +54,7 @@ export default function Home() {
               {t('pages.admin')}
             </Link>
           )}
-          <LocaleSwitcher />
+          <LocaleCurrencySwitcher />
           <button type="button" onClick={logout} className="text-ink underline">
             {t('common.signOut')}
           </button>

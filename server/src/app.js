@@ -7,6 +7,7 @@ import tripsRouter from './routes/trips.js';
 import countriesRouter from './routes/countries.js';
 import profileRouter from './routes/profile.js';
 import adminRouter from './routes/admin.js';
+import ratesRouter from './routes/rates.js';
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/trips', tripsRouter);
 app.use('/api/countries', countriesRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/rates', ratesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'not_found' });

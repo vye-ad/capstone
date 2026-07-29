@@ -4,7 +4,8 @@
     "back": "back",
     "wordmark": "expeditor",
     "cancel": "cancel",
-    "confirmDiscard": "discard unsaved changes?"
+    "confirmDiscard": "discard unsaved changes?",
+    "staleRate": "exchange rate may be outdated"
   },
   "landing": {
     "signIn": "sign in",

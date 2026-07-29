@@ -4,7 +4,8 @@
     "back": "retour",
     "wordmark": "expeditor",
     "cancel": "annuler",
-    "confirmDiscard": "abandonner les modifications non enregistrées ?"
+    "confirmDiscard": "abandonner les modifications non enregistrées ?",
+    "staleRate": "le taux de change est peut-être obsolète"
   },
   "landing": {
     "signIn": "se connecter",

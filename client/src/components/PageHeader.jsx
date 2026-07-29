@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext.jsx';
-import LocaleSwitcher from './LocaleSwitcher.jsx';
+import LocaleCurrencySwitcher from './LocaleCurrencySwitcher.jsx';
 
 export default function PageHeader({ page }) {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export default function PageHeader({ page }) {
         {t('common.wordmark')} | {page}
       </div>
       <div className="flex items-center gap-4">
-        <LocaleSwitcher />
+        <LocaleCurrencySwitcher />
         <button type="button" onClick={logout} className="text-ink underline">
           {t('common.signOut')}
         </button>

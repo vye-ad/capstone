@@ -6,6 +6,7 @@ import TripRow from '../components/TripRow.jsx';
 import Modal from '../components/Modal.jsx';
 import { listTrips, deleteTrip } from '../lib/trips.js';
 import { localizedCountryName } from '../lib/countryName.js';
+import { useRates } from '../lib/useRates.js';
 
 const FILTERS = ['all', 'upcoming', 'ongoing', 'completed'];
 
@@ -17,6 +18,7 @@ export default function MyTrips() {
   const [expandedIds, setExpandedIds] = useState(new Set());
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const { isStale } = useRates();
 
   useEffect(() => {
     setLoading(true);
@@ -75,7 +77,10 @@ export default function MyTrips() {
             <span>{t('myTrips.date')}</span>
             <span>{t('myTrips.destination')}</span>
             <span>{t('myTrips.status')}</span>
-            <span>{t('myTrips.budget')}</span>
+            <span>
+              {t('myTrips.budget')}
+              {isStale && <span className="text-danger"> *</span>}
+            </span>
             <span>{t('myTrips.actions')}</span>
             <span />
           </div>
@@ -90,6 +95,7 @@ export default function MyTrips() {
               />
             ))}
           </div>
+          {isStale && <p className="mt-2 text-sm text-danger">* {t('common.staleRate')}</p>}
         </div>
       )}
 

@@ -4,9 +4,14 @@ import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import { getCountry } from '../lib/countries.js';
 import { localizedCountryName } from '../lib/countryName.js';
+import { useAuth } from '../lib/AuthContext.jsx';
+import { useRates } from '../lib/useRates.js';
+import { convertAmount } from '../lib/currency.js';
 
 export default function CountryDetail() {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const { rates, isStale } = useRates();
   const { cca2 } = useParams();
   const [country, setCountry] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,6 +43,13 @@ export default function CountryDetail() {
   const hasCities = country.cities.length > 0;
   const hasAttractions = country.attractions.length > 0;
 
+  const rateValue =
+    country.currencyCode && rates?.[country.currencyCode] && rates?.[user.currency]
+      ? convertAmount(1, country.currencyCode, user.currency, rates)
+      : null;
+  const rateFormatted =
+    rateValue !== null ? new Intl.NumberFormat(i18n.language, { maximumFractionDigits: 2 }).format(rateValue) : null;
+
   return (
     <div className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.explore')} />
@@ -60,13 +72,15 @@ export default function CountryDetail() {
           <p className="text-ink">
             {t('countryDetail.language')}: {languages}
           </p>
-          {/*
-            §10.6 wants "1 {code} = {rate} {user currency}" appended here.
-            That needs GET /api/rates, which is a week 3 item (§15) — showing
-            name/symbol only until that endpoint exists.
-          */}
           <p className="text-ink">
             {t('countryDetail.currency')}: {country.currencyName} ({country.currencySymbol})
+            {rateFormatted !== null && (
+              <>
+                {' '}
+                — 1 {country.currencyCode} = {rateFormatted} {user.currency}
+                {isStale && <span className="text-muted"> ({t('common.staleRate')})</span>}
+              </>
+            )}
           </p>
 
           <div className="mt-6 flex gap-8">
