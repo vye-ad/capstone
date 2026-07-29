@@ -7,18 +7,19 @@ import CountrySelect from '../components/CountrySelect.jsx';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { getStats, updateProfile, changePassword, uploadAvatar, deleteAvatar } from '../lib/profile.js';
 import { getCountry } from '../lib/countries.js';
+import { localizedCountryName } from '../lib/countryName.js';
 import { updateProfileSchema, changePasswordSchema } from '../schemas/profile.js';
 import { zodFieldErrors } from '../lib/zodFieldErrors.js';
 
 const ALLOWED_AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 
-function formatMemberSince(iso) {
-  return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+function formatMemberSince(iso, locale) {
+  return new Date(iso).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 export default function Profile() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
@@ -42,9 +43,9 @@ export default function Profile() {
   useEffect(() => {
     getStats().then((data) => setStats(data.stats));
     getCountry(user.countryCode)
-      .then((data) => setCountryName(data.country.nameEn))
+      .then((data) => setCountryName(localizedCountryName(data.country, i18n.language)))
       .catch(() => {});
-  }, [user.countryCode]);
+  }, [user.countryCode, i18n.language]);
 
   function startEditing() {
     setEditForm({ name: user.name, email: user.email, countryCode: user.countryCode });
@@ -257,7 +258,7 @@ export default function Profile() {
               {t('profile.country')}: {countryName}
             </p>
             <p className="text-ink">
-              {t('profile.memberSince')}: {formatMemberSince(user.createdAt)}
+              {t('profile.memberSince')}: {formatMemberSince(user.createdAt, i18n.language)}
             </p>
 
             <div className="mt-4 flex gap-6">

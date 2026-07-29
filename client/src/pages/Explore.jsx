@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import StaticGlobe from '../components/StaticGlobe.jsx';
 import { listCountries } from '../lib/countries.js';
+import { localizedCountryName } from '../lib/countryName.js';
 
 export default function Explore() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [featured, setFeatured] = useState([]);
   const [query, setQuery] = useState('');
   // null = show featured list, array = show search results
@@ -60,10 +61,10 @@ export default function Explore() {
                 >
                   <img
                     src={country.flagSvgUrl}
-                    alt={country.flagAlt ?? country.nameEn}
+                    alt={country.flagAlt ?? localizedCountryName(country, i18n.language)}
                     className="h-4 w-6"
                   />
-                  {country.nameEn}
+                  {localizedCountryName(country, i18n.language)}
                 </Link>
               ))}
             </div>

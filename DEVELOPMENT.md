@@ -890,6 +890,8 @@ Selected locale persists on `User.locale` and is applied on login, so it survive
 
 Country names are the one content exception, because REST Countries supplies translations for free (§12).
 
+`[DEVIATION]` **Validation and error messages are not yet translated**, despite being listed above. Every Zod schema (client and server, 4 files: auth/trip/profile/admin) embeds English message strings directly, and ad-hoc errors (`email already registered`, `incorrect password`, `unknown country`, `cannot_modify_self`, etc.) are hardcoded the same way. Fixing this properly means switching the error contract from messages to translation keys everywhere — both schema files, every ad-hoc `validationError`/`apiError` call, and every component that currently renders `fieldErrors.x` directly instead of `t(fieldErrors.x)`. Deliberately deferred (developer decision, 2026-07-28) rather than attempted as a rushed addition late in an already large task — everything else in this section (all labels, headings, buttons, country names, date formats) is fully translated across all three locales.
+
 **Interface text is lowercase in all three locales.** Write the strings lowercase in the JSON — do not apply `text-transform`, since that produces incorrect results for some accented characters and makes the translation files misleading.
 
 ### Currency

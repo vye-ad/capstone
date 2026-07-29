@@ -3,9 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import { getCountry } from '../lib/countries.js';
+import { localizedCountryName } from '../lib/countryName.js';
 
 export default function CountryDetail() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { cca2 } = useParams();
   const [country, setCountry] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,15 +43,15 @@ export default function CountryDetail() {
       <PageHeader page={t('pages.explore')} />
 
       <div className="flex items-center gap-2 text-ink">
-        <img src={country.flagSvgUrl} alt={country.flagAlt ?? country.nameEn} className="h-4 w-6" />
-        <span>{country.nameEn}</span>
+        <img src={country.flagSvgUrl} alt={country.flagAlt ?? localizedCountryName(country, i18n.language)} className="h-4 w-6" />
+        <span>{localizedCountryName(country, i18n.language)}</span>
       </div>
 
       <div className="mt-6 flex flex-col gap-8 md:flex-row">
         <div className="md:w-1/3">
           <img
             src={country.imageUrl}
-            alt={country.nameEn}
+            alt={localizedCountryName(country, i18n.language)}
             className="aspect-[2/3] w-full rounded object-cover"
           />
         </div>

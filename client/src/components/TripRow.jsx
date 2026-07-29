@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { localizedCountryName } from '../lib/countryName.js';
 
 const STATUS_DOT_CLASS = {
   UPCOMING: 'bg-status-upcoming',
@@ -7,8 +8,8 @@ const STATUS_DOT_CLASS = {
   COMPLETED: 'bg-status-completed',
 };
 
-function formatDate(iso) {
-  return new Date(iso).toLocaleDateString(undefined, {
+function formatDate(iso, locale) {
+  return new Date(iso).toLocaleDateString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -17,17 +18,17 @@ function formatDate(iso) {
 }
 
 export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="rounded-pill border border-hairline px-4 py-3">
       <div className="grid grid-cols-6 items-center gap-4">
         <span className="text-ink">
-          {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
+          {formatDate(trip.startDate, i18n.language)} - {formatDate(trip.endDate, i18n.language)}
         </span>
         <span className="flex items-center gap-2 text-ink">
-          <img src={trip.country.flagSvgUrl} alt={trip.country.nameEn} className="h-4 w-6" />
-          {trip.country.nameEn}
+          <img src={trip.country.flagSvgUrl} alt={localizedCountryName(trip.country, i18n.language)} className="h-4 w-6" />
+          {localizedCountryName(trip.country, i18n.language)}
         </span>
         <span className="flex items-center gap-2 text-ink">
           <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
@@ -56,8 +57,8 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
         <div className="mt-4 border-t border-hairline pt-4">
           <div className="flex items-center justify-between">
             <span className="flex items-center gap-2 text-ink">
-              <img src={trip.country.flagSvgUrl} alt={trip.country.nameEn} className="h-4 w-6" />
-              {trip.country.nameEn}
+              <img src={trip.country.flagSvgUrl} alt={localizedCountryName(trip.country, i18n.language)} className="h-4 w-6" />
+              {localizedCountryName(trip.country, i18n.language)}
             </span>
             <span className="flex items-center gap-2 text-ink">
               <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
@@ -68,11 +69,11 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
           <div className="mt-4 grid grid-cols-3 gap-4">
             <div>
               <p className="text-muted">{t('createTrip.startDay')}</p>
-              <p className="text-muted">{formatDate(trip.startDate)}</p>
+              <p className="text-muted">{formatDate(trip.startDate, i18n.language)}</p>
             </div>
             <div>
               <p className="text-muted">{t('createTrip.endDay')}</p>
-              <p className="text-muted">{formatDate(trip.endDate)}</p>
+              <p className="text-muted">{formatDate(trip.endDate, i18n.language)}</p>
             </div>
             <div>
               <p className="text-muted">{t('createTrip.budget')}</p>

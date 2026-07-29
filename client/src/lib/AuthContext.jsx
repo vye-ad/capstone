@@ -1,17 +1,34 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import * as api from './api.js';
+import i18n from './i18n.js';
 
 const AuthContext = createContext(null);
 
+// Wraps setUser so that whenever a user (with a persisted locale) becomes
+// active — initial load, login, register, or a profile edit — i18next
+// switches to match. Accepts a plain value or a functional updater, same
+// as the underlying setState, so existing callers don't need to change.
+function applyUserUpdate(setUser, update) {
+  setUser((prev) => {
+    const next = typeof update === 'function' ? update(prev) : update;
+    if (next?.locale) {
+      i18n.changeLanguage(next.locale);
+    }
+    return next;
+  });
+}
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUserState] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const setUser = (update) => applyUserUpdate(setUserState, update);
 
   useEffect(() => {
     api
       .me()
       .then((data) => setUser(data.user))
-      .catch(() => setUser(null))
+      .catch(() => setUserState(null))
       .finally(() => setLoading(false));
   }, []);
 
@@ -29,7 +46,7 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     await api.logout();
-    setUser(null);
+    setUserState(null);
   }
 
   return (

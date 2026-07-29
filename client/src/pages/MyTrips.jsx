@@ -5,11 +5,12 @@ import PageHeader from '../components/PageHeader.jsx';
 import TripRow from '../components/TripRow.jsx';
 import Modal from '../components/Modal.jsx';
 import { listTrips, deleteTrip } from '../lib/trips.js';
+import { localizedCountryName } from '../lib/countryName.js';
 
 const FILTERS = ['all', 'upcoming', 'ongoing', 'completed'];
 
 export default function MyTrips() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -95,7 +96,7 @@ export default function MyTrips() {
       {deleteTarget && (
         <Modal onClose={() => setDeleteTarget(null)}>
           <p className="text-ink">
-            {t('myTrips.deleteConfirm', { country: deleteTarget.country.nameEn })}
+            {t('myTrips.deleteConfirm', { country: localizedCountryName(deleteTarget.country, i18n.language) })}
           </p>
           <p className="mt-1 text-muted">{t('myTrips.deleteWarning')}</p>
           <div className="mt-6 flex justify-center gap-6">

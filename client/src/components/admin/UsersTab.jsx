@@ -4,12 +4,12 @@ import Modal from '../Modal.jsx';
 import { useAuth } from '../../lib/AuthContext.jsx';
 import { listUsers, updateUserRole, deleteUser } from '../../lib/admin.js';
 
-function formatDate(iso) {
-  return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+function formatDate(iso, locale) {
+  return new Date(iso).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 export default function UsersTab() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user: currentUser } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,7 +75,7 @@ export default function UsersTab() {
                 <option value="USER">USER</option>
                 <option value="ADMIN">ADMIN</option>
               </select>
-              <span>{formatDate(u.createdAt)}</span>
+              <span>{formatDate(u.createdAt, i18n.language)}</span>
               <div className="flex items-center justify-between">
                 <span>{u.tripCount}</span>
                 <button

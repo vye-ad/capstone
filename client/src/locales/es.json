@@ -1,0 +1,151 @@
+{
+  "common": {
+    "signOut": "cerrar sesión",
+    "back": "atrás",
+    "wordmark": "expeditor",
+    "cancel": "cancelar",
+    "confirmDiscard": "¿descartar los cambios sin guardar?"
+  },
+  "landing": {
+    "signIn": "iniciar sesión",
+    "signUp": "registrarse"
+  },
+  "auth": {
+    "email": "correo electrónico",
+    "password": "contraseña",
+    "name": "nombre",
+    "country": "país",
+    "enterAccount": "iniciar sesión",
+    "createAccount": "crear cuenta",
+    "invalidCredentials": "correo electrónico o contraseña incorrectos"
+  },
+  "pages": {
+    "explore": "explorar",
+    "myTrips": "mis viajes",
+    "createTrip": "crear viaje",
+    "editTrip": "editar viaje",
+    "profile": "perfil",
+    "admin": "admin"
+  },
+  "home": {
+    "nav": {
+      "profile": "perfil",
+      "explore": "explorar",
+      "myTrips": "mis viajes"
+    },
+    "welcomeBack": "bienvenido de nuevo {{name}}",
+    "upcomingTrips": "próximos viajes",
+    "noUpcomingTrips": "no tienes próximos viajes",
+    "planATrip": "planear un viaje",
+    "inDays_one": "en {{count}} día",
+    "inDays_other": "en {{count}} días",
+    "forDays_one": "por {{count}} día",
+    "forDays_other": "por {{count}} días"
+  },
+  "explore": {
+    "searchPlaceholder": "buscar destino",
+    "featuredDestinations": "destinos destacados",
+    "noResults": "no se encontraron destinos"
+  },
+  "countryDetail": {
+    "language": "idioma",
+    "currency": "moneda",
+    "mainCities": "principales ciudades",
+    "topAttractions": "principales atracciones",
+    "planATrip": "planear un viaje"
+  },
+  "createTrip": {
+    "chooseDestination": "elegir destino",
+    "startDay": "día de inicio",
+    "endDay": "día de fin",
+    "status": "estado",
+    "budget": "presupuesto",
+    "tripDetails": "detalles del viaje",
+    "transportType": "tipo de transporte",
+    "accommodationDetails": "detalles del alojamiento",
+    "accommodationType": "tipo de alojamiento",
+    "notes": "notas",
+    "submit": "enviar",
+    "status_UPCOMING": "próximo",
+    "status_ONGOING": "en curso",
+    "status_COMPLETED": "completado",
+    "transport_PLANE": "avión",
+    "transport_TRAIN": "tren",
+    "transport_CAR": "coche",
+    "transport_BUS": "autobús",
+    "transport_FERRY": "ferry",
+    "transport_OTHER": "otro",
+    "accommodation_HOTEL": "hotel",
+    "accommodation_HOSTEL": "hostal",
+    "accommodation_APARTMENT": "apartamento",
+    "accommodation_GUESTHOUSE": "casa de huéspedes",
+    "accommodation_CAMPING": "camping",
+    "accommodation_FRIENDS": "con amigos",
+    "accommodation_OTHER": "otro"
+  },
+  "myTrips": {
+    "date": "fecha",
+    "destination": "destino",
+    "status": "estado",
+    "budget": "presupuesto",
+    "actions": "acciones",
+    "edit": "editar",
+    "delete": "eliminar",
+    "empty": "aún no tienes viajes",
+    "filter_all": "todos",
+    "filter_upcoming": "próximos",
+    "filter_ongoing": "en curso",
+    "filter_completed": "completados",
+    "deleteConfirm": "¿eliminar tu viaje a {{country}}?",
+    "deleteWarning": "esta acción no se puede deshacer."
+  },
+  "profile": {
+    "uploadPicture": "subir foto",
+    "travelStatistics": "estadísticas de viaje",
+    "totalTrips": "viajes totales",
+    "completedTrips": "viajes completados",
+    "ongoingTrips": "viajes en curso",
+    "upcomingTrips": "próximos viajes",
+    "countriesVisited": "países visitados",
+    "name": "nombre",
+    "email": "correo electrónico",
+    "country": "país",
+    "memberSince": "miembro desde",
+    "editProfile": "editar perfil",
+    "changePassword": "cambiar contraseña",
+    "save": "guardar",
+    "currentPassword": "contraseña actual",
+    "newPassword": "nueva contraseña",
+    "removePicture": "eliminar foto",
+    "avatarInvalidType": "debe ser una imagen jpeg, png o webp",
+    "avatarTooLarge": "la imagen debe pesar menos de 5 mb",
+    "avatarUploadFailed": "error al subir — inténtalo de nuevo"
+  },
+  "admin": {
+    "tabDestinations": "destinos",
+    "tabUsers": "usuarios",
+    "users": {
+      "name": "nombre",
+      "email": "correo electrónico",
+      "country": "país",
+      "role": "rol",
+      "memberSince": "miembro desde",
+      "tripCount": "viajes",
+      "delete": "eliminar",
+      "deleteConfirm": "¿eliminar la cuenta de {{name}}?",
+      "deleteWarning": "esta acción no se puede deshacer. también se eliminarán todos sus viajes."
+    },
+    "destinations": {
+      "name": "nombre",
+      "featured": "destacado",
+      "image": "imagen",
+      "cities": "ciudades",
+      "attractions": "atracciones",
+      "uploadImage": "subir imagen",
+      "addCity": "añadir ciudad",
+      "addAttraction": "añadir atracción",
+      "cityNamePlaceholder": "nombre de la ciudad",
+      "attractionNamePlaceholder": "nombre de la atracción"
+    }
+  }
+}

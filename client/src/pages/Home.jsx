@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { listTrips } from '../lib/trips.js';
+import LocaleSwitcher from '../components/LocaleSwitcher.jsx';
+import { localizedCountryName } from '../lib/countryName.js';
 
 function todayUTC() {
   const now = new Date();
@@ -14,7 +16,7 @@ function wholeDaysBetween(a, b) {
 }
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   // undefined = still loading, null = confirmed no upcoming trips
   const [nearestTrip, setNearestTrip] = useState(undefined);
@@ -52,6 +54,7 @@ export default function Home() {
               {t('pages.admin')}
             </Link>
           )}
+          <LocaleSwitcher />
           <button type="button" onClick={logout} className="text-ink underline">
             {t('common.signOut')}
           </button>
@@ -95,10 +98,10 @@ export default function Home() {
             <p>
               <img
                 src={nearestTrip.country.flagSvgUrl}
-                alt={nearestTrip.country.nameEn}
+                alt={localizedCountryName(nearestTrip.country, i18n.language)}
                 className="inline h-4 w-6 align-middle"
               />{' '}
-              {nearestTrip.country.nameEn} {t('home.inDays', { count: daysUntil })}{' '}
+              {localizedCountryName(nearestTrip.country, i18n.language)} {t('home.inDays', { count: daysUntil })}{' '}
               {t('home.forDays', { count: tripLength })}
             </p>
           </div>

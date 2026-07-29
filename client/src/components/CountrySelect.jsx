@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { listCountries, getCountry } from '../lib/countries.js';
+import { localizedCountryName } from '../lib/countryName.js';
 
 export default function CountrySelect({ id, value, onChange, placeholder }) {
+  const { i18n } = useTranslation();
   const [query, setQuery] = useState('');
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
@@ -14,9 +17,9 @@ export default function CountrySelect({ id, value, onChange, placeholder }) {
       return;
     }
     getCountry(value)
-      .then((data) => setSelectedLabel(data.country.nameEn))
+      .then((data) => setSelectedLabel(localizedCountryName(data.country, i18n.language)))
       .catch(() => {});
-  }, [value]);
+  }, [value, i18n.language]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -59,13 +62,13 @@ export default function CountrySelect({ id, value, onChange, placeholder }) {
                 type="button"
                 onClick={() => {
                   onChange(c.cca2);
-                  setSelectedLabel(c.nameEn);
+                  setSelectedLabel(localizedCountryName(c, i18n.language));
                   setOpen(false);
                 }}
                 className="flex w-full items-center gap-2 px-2 py-1 text-left text-ink hover:bg-hairline/20"
               >
                 <img src={c.flagSvgUrl} alt="" className="h-3 w-5" />
-                {c.nameEn}
+                {localizedCountryName(c, i18n.language)}
               </button>
             </li>
           ))}
