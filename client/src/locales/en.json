@@ -120,5 +120,32 @@
     "avatarInvalidType": "must be a jpeg, png, or webp image",
     "avatarTooLarge": "image must be under 5MB",
     "avatarUploadFailed": "upload failed — try again"
+  },
+  "admin": {
+    "tabDestinations": "destinations",
+    "tabUsers": "users",
+    "users": {
+      "name": "name",
+      "email": "email",
+      "country": "country",
+      "role": "role",
+      "memberSince": "member since",
+      "tripCount": "trips",
+      "delete": "delete",
+      "deleteConfirm": "delete {{name}}'s account?",
+      "deleteWarning": "this cannot be undone. all of their trips will be deleted too."
+    },
+    "destinations": {
+      "name": "name",
+      "featured": "featured",
+      "image": "image",
+      "cities": "cities",
+      "attractions": "attractions",
+      "uploadImage": "upload image",
+      "addCity": "add city",
+      "addAttraction": "add attraction",
+      "cityNamePlaceholder": "city name",
+      "attractionNamePlaceholder": "attraction name"
+    }
   }
 }

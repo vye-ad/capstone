@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './lib/AuthContext.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
+import RequireAdmin from './components/RequireAdmin.jsx';
 import Landing from './pages/Landing.jsx';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
@@ -79,9 +80,9 @@ function App() {
           <Route
             path="/admin"
             element={
-              <RequireAuth>
+              <RequireAdmin>
                 <Admin />
-              </RequireAuth>
+              </RequireAdmin>
             }
           />
         </Routes>

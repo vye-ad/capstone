@@ -46,9 +46,16 @@ export default function Home() {
     <div className="flex min-h-screen flex-col px-4 py-6">
       <div className="flex items-center justify-between">
         <div className="text-[32px] text-ink">xpdtr</div>
-        <button type="button" onClick={logout} className="text-ink underline">
-          {t('common.signOut')}
-        </button>
+        <div className="flex items-center gap-6">
+          {user.role === 'ADMIN' && (
+            <Link to="/admin" className="text-ink underline">
+              {t('pages.admin')}
+            </Link>
+          )}
+          <button type="button" onClick={logout} className="text-ink underline">
+            {t('common.signOut')}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-1 items-center justify-center">
