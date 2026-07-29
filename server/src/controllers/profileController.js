@@ -5,7 +5,9 @@ import { getProfileStats } from '../services/profileStats.js';
 import { updateProfileSchema, changePasswordSchema } from '../schemas/profile.js';
 import { validationError } from '../lib/errors.js';
 import { clearAuthCookie } from '../lib/cookies.js';
-import { uploadAvatarImage, destroyAvatarImage } from '../services/avatarUpload.js';
+import { uploadImage, destroyImage } from '../services/cloudinaryUpload.js';
+
+const AVATAR_TRANSFORMATION = { folder: 'expeditor/avatars', transformation: [{ width: 200, height: 200, crop: 'fill', gravity: 'face' }] };
 
 const BCRYPT_COST = 12;
 
@@ -81,7 +83,7 @@ export async function getStats(req, res, next) {
 
 export async function uploadProfileAvatar(req, res, next) {
   try {
-    const result = await uploadAvatarImage(req.file.buffer);
+    const result = await uploadImage(req.file.buffer, AVATAR_TRANSFORMATION);
     const previousPublicId = req.user.avatarPublicId;
 
     await prisma.user.update({
@@ -92,7 +94,7 @@ export async function uploadProfileAvatar(req, res, next) {
     // Destroy the old asset only after the new one is safely stored, so a
     // failed upload never leaves the user without any avatar image.
     if (previousPublicId) {
-      await destroyAvatarImage(previousPublicId).catch(() => {});
+      await destroyImage(previousPublicId).catch(() => {});
     }
 
     res.json({ avatarUrl: result.secure_url });
@@ -104,7 +106,7 @@ export async function uploadProfileAvatar(req, res, next) {
 export async function deleteProfileAvatar(req, res, next) {
   try {
     if (req.user.avatarPublicId) {
-      await destroyAvatarImage(req.user.avatarPublicId).catch(() => {});
+      await destroyImage(req.user.avatarPublicId).catch(() => {});
     }
     await prisma.user.update({
       where: { id: req.user.id },

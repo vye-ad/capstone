@@ -12,7 +12,7 @@ const upload = multer({
   },
 });
 
-export function uploadAvatar(req, res, next) {
+export function uploadImage(req, res, next) {
   upload.single('image')(req, res, (err) => {
     if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
       return next(apiError(400, 'file_too_large'));

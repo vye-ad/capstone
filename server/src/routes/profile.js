@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { requireAuth } from '../middleware/auth.js';
-import { uploadAvatar } from '../middleware/avatarUpload.js';
+import { uploadImage } from '../middleware/imageUpload.js';
 import {
   getProfile,
   updateProfile,
@@ -16,7 +16,7 @@ router.use(requireAuth);
 router.get('/', getProfile);
 router.patch('/', updateProfile);
 router.patch('/password', changePassword);
-router.post('/avatar', uploadAvatar, uploadProfileAvatar);
+router.post('/avatar', uploadImage, uploadProfileAvatar);
 router.delete('/avatar', deleteProfileAvatar);
 router.get('/stats', getStats);
 
