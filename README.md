@@ -4,7 +4,7 @@ A personal trip planner. Browse country destinations, then create, track,
 edit, and delete your own trips — bilingual-plus (English, French, Spanish)
 and multi-currency. Built as a solo, 4-week capstone project.
 
-> **Status:** in progress (Week 2). This README will be filled in as work
+> **Status:** in progress (Week 3). This README will be filled in as work
 > lands — see the sections marked TODO below.
 
 ## Screenshots
@@ -13,7 +13,8 @@ TODO — added once the core screens are built.
 
 ## Live deployment
 
-TODO — not yet deployed.
+TODO — frontend on Vercel, backend on Render, database on Prisma Postgres.
+See [Deployment](#deployment) below for the setup steps; URL added here once live.
 
 ## Tech stack
 
@@ -94,6 +95,51 @@ See `DEVELOPMENT.md` §8 for the full endpoint reference.
 The collection currently covers Auth, Trips, and Countries — Profile,
 Rates, and Admin will be added as those endpoints land.
 
+## Deployment
+
+Three services: **Vercel** (frontend), **Render** (backend, free tier —
+free web services spin down after 15 min idle, so the first request after
+a quiet spell takes 30-60s to wake up), **Prisma Postgres** (database).
+
+### 1. Database
+
+Already provisioned on Prisma Postgres — grab the **direct** Postgres
+connection string (not the Accelerate/`prisma://` one — this project uses
+the classic `prisma-client-js` generator, not the Accelerate extension).
+
+### 2. Backend (Render)
+
+This repo includes `render.yaml` (a Blueprint) describing the service:
+Node runtime, `server/` as root, builds with
+`npm install && npx prisma generate && npx prisma migrate deploy` (so
+migrations apply to production on every deploy), starts with `npm start`.
+
+1. On Render: **New → Blueprint**, connect this GitHub repo.
+2. Render reads `render.yaml` and prompts for the env vars marked
+   `sync: false` — fill in `DATABASE_URL` (from step 1), a fresh
+   `JWT_SECRET` (don't reuse the local dev one), `CLOUDINARY_*`,
+   `PEXELS_API_KEY`, `REST_COUNTRIES_API_KEY`, `SEED_ADMIN_EMAIL`/
+   `SEED_ADMIN_PASSWORD`. Leave `CLIENT_ORIGIN` blank for now — the
+   frontend doesn't exist yet.
+3. Deploy. Note the resulting URL (e.g. `https://expeditor-api.onrender.com`).
+
+### 3. Frontend (Vercel)
+
+`client/vercel.json` adds the SPA rewrite React Router needs (without it,
+refreshing any route other than `/` 404s).
+
+1. On Vercel: **Add New → Project**, import this repo, set **Root
+   Directory** to `client`.
+2. Add an environment variable: `VITE_API_BASE_URL` = the Render URL from
+   step 2.
+3. Deploy. Note the resulting URL (e.g. `https://expeditor.vercel.app`).
+
+### 4. Close the loop
+
+Go back to the Render service's environment settings and set
+`CLIENT_ORIGIN` to the Vercel URL from step 3, then trigger a redeploy —
+CORS won't accept requests from the frontend until this is set.
+
 ## Database schema
 
 See `DEVELOPMENT.md` §6 for the Prisma schema (`User`, `Trip`, `Country`,
@@ -107,7 +153,7 @@ field.
 | REST Countries API (v5) | Country reference data | https://restcountries.com |
 | Pexels API | Destination image fallback | https://www.pexels.com/api/ |
 | Cloudinary | Image storage and transformation | https://cloudinary.com |
-| Exchange rate provider | Currency conversion | TBD |
+| Exchange rate provider (open.er-api.com) | Currency conversion | https://www.exchangerate-api.com/docs/free |
 | Tailwind CSS | Styling | https://tailwindcss.com |
 | Prisma | ORM | https://www.prisma.io |
 | react-i18next | Internationalisation | https://react.i18next.com |
