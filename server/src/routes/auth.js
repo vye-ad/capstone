@@ -10,6 +10,9 @@ const authLimiter = rateLimit({
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
+  // The test suite legitimately makes far more than 10 auth requests per
+  // run — this only ever skips in NODE_ENV=test, never in dev or prod.
+  skip: () => process.env.NODE_ENV === 'test',
 });
 
 router.post('/register', authLimiter, register);

@@ -6,15 +6,24 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "license": "ISC",
   "prisma": {
     "seed": "node prisma/seed.js"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ]
+  },
   "devDependencies": {
+    "jest": "^30.4.2",
     "nodemon": "^3.1.14",
-    "prisma": "^6.19.3"
+    "prisma": "^6.19.3",
+    "supertest": "^7.2.2"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

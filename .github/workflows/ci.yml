@@ -28,6 +28,8 @@ jobs:
         working-directory: server
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/expeditor_ci
+      JWT_SECRET: ci-test-secret
+      NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,6 +42,7 @@ jobs:
         run: npx prisma migrate deploy
       - name: Generate Prisma client
         run: npx prisma generate
+      - run: npm test
 
   client:
     runs-on: ubuntu-latest
@@ -57,4 +60,5 @@ jobs:
           cache-dependency-path: client/package-lock.json
       - run: npm ci
       - run: npm run lint
+      - run: npm test
       - run: npm run build
