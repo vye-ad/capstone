@@ -1135,56 +1135,56 @@ Mapped to the four capstone milestone weeks. **Do not start a week's work before
 
 ### Week 1 — foundations
 
-- [ ] Repo, `client/` + `server/` scaffolding, `.env.example`, `.gitignore`
-- [ ] README first draft
-- [ ] Prisma schema (§6), first migration
-- [ ] Seed script: REST Countries import, featured eight, cities/attractions, admin user
-- [ ] Express app skeleton: `helmet`, `cors`, `cookie-parser`, error handler
-- [ ] Auth endpoints: register, login, logout, me
-- [ ] Auth middleware: `requireAuth`, `requireAdmin`, `requireOwner`
-- [ ] **Verify cookie auth in the browser, not just Postman** (§9)
-- [ ] Tailwind config with the §5 tokens
-- [ ] React Router skeleton, all routes rendering placeholders, **no transitions**
-- [ ] Landing, Sign In, Sign Up wired to the auth API
+- [x] Repo, `client/` + `server/` scaffolding, `.env.example`, `.gitignore`
+- [x] README first draft
+- [x] Prisma schema (§6), first migration
+- [x] Seed script: REST Countries import, featured eight, cities/attractions, admin user
+- [x] Express app skeleton: `helmet`, `cors`, `cookie-parser`, error handler
+- [x] Auth endpoints: register, login, logout, me
+- [x] Auth middleware: `requireAuth`, `requireAdmin`, `requireOwner`
+- [x] **Verify cookie auth in the browser, not just Postman** (§9)
+- [x] Tailwind config with the §5 tokens
+- [x] React Router skeleton, all routes rendering placeholders, **no transitions**
+- [x] Landing, Sign In, Sign Up wired to the auth API
 
 ### Week 2 — core data
 
-- [ ] Trip CRUD endpoints with full validation
-- [ ] Status resolver module (§7) — **write this before any screen consumes status**
-- [ ] Country endpoints: featured, search, detail
-- [ ] Home page with nearest-upcoming-trip panel
-- [ ] Explore list + search
-- [ ] Country detail page
-- [ ] Create Trip form
-- [ ] My Trips table, collapsed rows only
-- [ ] Postman collection generated and committed
+- [x] Trip CRUD endpoints with full validation
+- [x] Status resolver module (§7) — **write this before any screen consumes status**
+- [x] Country endpoints: featured, search, detail
+- [x] Home page with nearest-upcoming-trip panel
+- [x] Explore list + search
+- [x] Country detail page
+- [x] Create Trip form
+- [x] My Trips table, collapsed rows only
+- [x] Postman collection generated and committed
 
 ### Week 3 — completing the requirements
 
-- [ ] Expandable trip rows (read-only — §10.8)
-- [ ] Edit trip
-- [ ] Delete with confirmation modal
-- [ ] Status filter on My Trips
-- [ ] Profile page + stats endpoint (single SQL aggregate)
-- [ ] Edit profile, change password
-- [ ] Cloudinary avatar upload
-- [ ] Admin dashboard: destinations tab, users tab, self-modification guard
-- [ ] i18n: extract every string, three locale files, locale switcher
-- [ ] Currency: rate caching, switcher, `Intl.NumberFormat` display
-- [ ] Pexels image fallback chain
-- [ ] **Responsive layouts for every screen**
-- [ ] GitHub Actions workflow
-- [ ] Deploy — get it live with time to spare
+- [x] Expandable trip rows (read-only — §10.8)
+- [x] Edit trip
+- [x] Delete with confirmation modal
+- [x] Status filter on My Trips
+- [x] Profile page + stats endpoint (single SQL aggregate)
+- [x] Edit profile, change password
+- [x] Cloudinary avatar upload
+- [x] Admin dashboard: destinations tab, users tab, self-modification guard
+- [x] i18n: extract every string, three locale files, locale switcher
+- [x] Currency: rate caching, switcher, `Intl.NumberFormat` display
+- [x] Pexels image fallback chain
+- [x] **Responsive layouts for every screen**
+- [x] GitHub Actions workflow
+- [x] Deploy — get it live with time to spare
 
 ### Week 4 — polish and optional
 
 - [ ] Page transitions (§13)
 - [ ] `[OPTIONAL]` 3D globe (§14)
-- [ ] Empty states for every list
-- [ ] Loading and error states for every async operation
-- [ ] Accessibility pass: keyboard navigation, visible focus rings, alt text, form labels
-- [ ] Lighthouse pass
-- [ ] README final
+- [x] Empty states for every list
+- [x] Loading and error states for every async operation
+- [x] Accessibility pass: keyboard navigation, visible focus rings, alt text, form labels
+- [x] Lighthouse pass
+- [x] README final
 - [ ] Tests if time allows — Jest + Supertest (backend), Vitest (frontend)
 
 **If week 4 runs short, cut the globe first, then transitions.** Both are good-to-haves. Every week-3 item is a graded must-have.
@@ -1196,6 +1196,13 @@ Mapped to the four capstone milestone weeks. **Do not start a week's work before
 Generate `postman/expeditor.postman_collection.json` **from the §8 endpoint table** and commit it. Do not hand-maintain a separate API spec — one source of truth, two outputs. When a route changes, update §8 and regenerate.
 
 Collection structure mirroring §8: `Auth`, `Profile`, `Trips`, `Countries`, `Rates`, `Admin`.
+
+> **[GAP]** The committed collection currently only has `Auth`, `Trips`,
+> `Countries` — it was generated in Week 2 and never regenerated after the
+> Profile, Rates, and Admin endpoints landed in Week 3. Endpoint behavior
+> for those three has been verified via the actual frontend and Playwright
+> against the live deployment, so nothing is unverified, but the Postman
+> collection itself is stale relative to this section's requirement.
 
 Two environments:
 

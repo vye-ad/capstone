@@ -1,15 +1,23 @@
 # expeditor
 
+[![CI](https://github.com/vye-ad/capstone/actions/workflows/ci.yml/badge.svg)](https://github.com/vye-ad/capstone/actions/workflows/ci.yml)
+
 A personal trip planner. Browse country destinations, then create, track,
 edit, and delete your own trips — bilingual-plus (English, French, Spanish)
 and multi-currency. Built as a solo, 4-week capstone project.
 
-> **Status:** in progress (Week 3). This README will be filled in as work
-> lands — see the sections marked TODO below.
+> **Status:** in progress (Week 4 — polish). All graded must-haves (Weeks
+> 1-3) are complete, deployed, and verified live. Remaining: page
+> transitions, an optional 3D globe, and automated tests if time allows —
+> see `DEVELOPMENT.md` §15 for the full checklist.
 
 ## Screenshots
 
-TODO — added once the core screens are built.
+| | |
+|---|---|
+| ![Landing](docs/screenshots/landing.png) | ![Home](docs/screenshots/home.png) |
+| ![Explore](docs/screenshots/explore.png) | ![Country detail](docs/screenshots/country-detail.png) |
+| ![My Trips](docs/screenshots/my-trips.png) | ![Profile](docs/screenshots/profile.png) |
 
 ## Live deployment
 
@@ -96,8 +104,11 @@ committed file — fill them in yourself from your own `server/.env`'s
 `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD` rather than committing them.
 See `DEVELOPMENT.md` §8 for the full endpoint reference.
 
-The collection currently covers Auth, Trips, and Countries — Profile,
-Rates, and Admin will be added as those endpoints land.
+The committed collection covers Auth, Trips, and Countries; it was
+generated in Week 2 and hasn't been regenerated since Profile, Rates, and
+Admin endpoints landed in Week 3 (see `DEVELOPMENT.md` §16). Those three
+have been verified through the actual frontend and against the live
+deployment instead.
 
 ## Deployment
 
@@ -126,6 +137,11 @@ migrations apply to production on every deploy), starts with `npm start`.
    `SEED_ADMIN_PASSWORD`. Leave `CLIENT_ORIGIN` blank for now — the
    frontend doesn't exist yet.
 3. Deploy. Note the resulting URL (e.g. `https://expeditor-api.onrender.com`).
+4. `migrate deploy` only applies migrations — it does not seed. Run the
+   seed once against production yourself, e.g.
+   `DATABASE_URL="<production connection string>" npx prisma db seed`
+   from `server/` locally. Without this, registration fails with an
+   "unknown country" error because the `Country` table is empty.
 
 ### 3. Frontend (Vercel)
 
@@ -144,6 +160,12 @@ Go back to the Render service's environment settings and set
 `CLIENT_ORIGIN` to the Vercel URL from step 3, then trigger a redeploy —
 CORS won't accept requests from the frontend until this is set.
 
+**Gotcha:** `CLIENT_ORIGIN` must match the browser's `Origin` header
+byte-for-byte — no trailing slash (`https://your-app.vercel.app`, not
+`https://your-app.vercel.app/`). A trailing slash passes every `curl`
+check (curl doesn't enforce CORS) but silently fails in a real browser,
+since the `Origin` header it sends never has one.
+
 ## Database schema
 
 See `DEVELOPMENT.md` §6 for the Prisma schema (`User`, `Trip`, `Country`,
@@ -161,7 +183,6 @@ field.
 | Tailwind CSS | Styling | https://tailwindcss.com |
 | Prisma | ORM | https://www.prisma.io |
 | react-i18next | Internationalisation | https://react.i18next.com |
-| `motion` (Framer Motion) | Page transitions | https://motion.dev |
 
 Updated as each dependency is actually introduced.
 
