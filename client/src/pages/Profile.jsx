@@ -29,11 +29,13 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({ name: user.name, email: user.email, countryCode: user.countryCode });
   const [fieldErrors, setFieldErrors] = useState({});
+  const [profileFormError, setProfileFormError] = useState(null);
   const [savingProfile, setSavingProfile] = useState(false);
 
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '' });
   const [passwordFieldErrors, setPasswordFieldErrors] = useState({});
+  const [passwordFormError, setPasswordFormError] = useState(null);
   const [changingPassword, setChangingPassword] = useState(false);
 
   const fileInputRef = useRef(null);
@@ -50,6 +52,7 @@ export default function Profile() {
   function startEditing() {
     setEditForm({ name: user.name, email: user.email, countryCode: user.countryCode });
     setFieldErrors({});
+    setProfileFormError(null);
     setEditing(true);
   }
 
@@ -61,13 +64,15 @@ export default function Profile() {
       return;
     }
     setFieldErrors({});
+    setProfileFormError(null);
     setSavingProfile(true);
     try {
       const data = await updateProfile(parsed.data);
       setUser(data.user);
       setEditing(false);
     } catch (err) {
-      setFieldErrors(err.fields ?? {});
+      if (err.fields) setFieldErrors(err.fields);
+      else setProfileFormError(t('common.somethingWentWrong'));
     } finally {
       setSavingProfile(false);
     }
@@ -81,6 +86,7 @@ export default function Profile() {
       return;
     }
     setPasswordFieldErrors({});
+    setPasswordFormError(null);
     setChangingPassword(true);
     try {
       await changePassword(parsed.data);
@@ -89,7 +95,8 @@ export default function Profile() {
       setUser(null);
       navigate('/signin');
     } catch (err) {
-      setPasswordFieldErrors(err.fields ?? {});
+      if (err.fields) setPasswordFieldErrors(err.fields);
+      else setPasswordFormError(t('common.somethingWentWrong'));
     } finally {
       setChangingPassword(false);
     }
@@ -233,6 +240,7 @@ export default function Profile() {
               />
               {fieldErrors.countryCode && <p className="text-sm text-danger">{fieldErrors.countryCode}</p>}
             </label>
+            {profileFormError && <p className="text-danger">{profileFormError}</p>}
             <div className="mt-2 flex gap-6">
               <button type="button" onClick={() => setEditing(false)} className="text-ink underline">
                 {t('common.cancel')}
@@ -267,7 +275,11 @@ export default function Profile() {
               </button>
               <button
                 type="button"
-                onClick={() => setShowPasswordModal(true)}
+                onClick={() => {
+                  setPasswordFormError(null);
+                  setPasswordFieldErrors({});
+                  setShowPasswordModal(true);
+                }}
                 className="text-ink underline"
               >
                 {t('profile.changePassword')}
@@ -306,6 +318,7 @@ export default function Profile() {
                 <p className="text-sm text-danger">{passwordFieldErrors.newPassword}</p>
               )}
             </label>
+            {passwordFormError && <p className="text-danger">{passwordFormError}</p>}
             <div className="mt-2 flex justify-center gap-6">
               <button
                 type="button"

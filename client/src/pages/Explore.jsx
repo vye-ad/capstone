@@ -17,6 +17,7 @@ export default function Explore() {
   useEffect(() => {
     listCountries({ featured: 'true' })
       .then((data) => setFeatured(data.countries))
+      .catch(() => setFeatured([]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -26,7 +27,9 @@ export default function Explore() {
       return;
     }
     const handle = setTimeout(() => {
-      listCountries({ q: query.trim() }).then((data) => setResults(data.countries));
+      listCountries({ q: query.trim() })
+        .then((data) => setResults(data.countries))
+        .catch(() => setResults([]));
     }, 300);
     return () => clearTimeout(handle);
   }, [query]);
@@ -49,7 +52,9 @@ export default function Explore() {
       <div className="mt-8 flex gap-8">
         <div className="flex-1">
           {!showingSearch && <h2 className="mb-4 text-ink">{t('explore.featuredDestinations')}</h2>}
-          {loading ? null : list.length === 0 ? (
+          {loading ? (
+            <p className="text-muted">{t('common.loading')}</p>
+          ) : list.length === 0 ? (
             <p className="text-muted">{t('explore.noResults')}</p>
           ) : (
             <div className="grid grid-cols-2 gap-4">

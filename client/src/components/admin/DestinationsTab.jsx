@@ -16,11 +16,13 @@ export default function DestinationsTab() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedCca2, setExpandedCca2] = useState(null);
+  const [actionError, setActionError] = useState(null);
 
   function reload() {
     setLoading(true);
     listCountriesAdmin()
       .then((data) => setCountries(data.countries))
+      .catch(() => setActionError(t('common.somethingWentWrong')))
       .finally(() => setLoading(false));
   }
 
@@ -29,14 +31,20 @@ export default function DestinationsTab() {
   }, []);
 
   async function handleToggleFeatured(cca2, current) {
-    await updateCountry(cca2, { isFeatured: !current });
-    reload();
+    setActionError(null);
+    try {
+      await updateCountry(cca2, { isFeatured: !current });
+      reload();
+    } catch {
+      setActionError(t('common.somethingWentWrong'));
+    }
   }
 
-  if (loading) return null;
+  if (loading) return <p className="text-muted">{t('common.loading')}</p>;
 
   return (
     <div className="overflow-x-auto">
+      {actionError && <p className="mb-2 text-danger">{actionError}</p>}
       <div className="min-w-[640px]">
         <div className="grid grid-cols-5 gap-4 px-2 text-muted">
           <span>{t('admin.destinations.name')}</span>
@@ -54,6 +62,7 @@ export default function DestinationsTab() {
               onToggle={() => setExpandedCca2(expandedCca2 === c.cca2 ? null : c.cca2)}
               onToggleFeatured={() => handleToggleFeatured(c.cca2, c.isFeatured)}
               onChanged={reload}
+              onError={() => setActionError(t('common.somethingWentWrong'))}
             />
           ))}
         </div>
@@ -62,7 +71,7 @@ export default function DestinationsTab() {
   );
 }
 
-function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChanged }) {
+function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChanged, onError }) {
   const { t } = useTranslation();
   const [detail, setDetail] = useState(null);
   const [cityName, setCityName] = useState('');
@@ -71,12 +80,16 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
 
   useEffect(() => {
     if (expanded) {
-      getCountry(country.cca2).then((data) => setDetail(data.country));
+      getCountry(country.cca2)
+        .then((data) => setDetail(data.country))
+        .catch(onError);
     }
-  }, [expanded, country.cca2]);
+  }, [expanded, country.cca2, onError]);
 
   function refreshDetail() {
-    getCountry(country.cca2).then((data) => setDetail(data.country));
+    getCountry(country.cca2)
+      .then((data) => setDetail(data.country))
+      .catch(onError);
   }
 
   async function handleImageChange(e) {
@@ -88,6 +101,8 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
       await uploadCountryImage(country.cca2, file);
       onChanged();
       refreshDetail();
+    } catch {
+      onError();
     } finally {
       setUploading(false);
     }
@@ -96,31 +111,47 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
   async function handleAddCity(e) {
     e.preventDefault();
     if (!cityName.trim()) return;
-    await createCity(country.cca2, cityName.trim());
-    setCityName('');
-    refreshDetail();
-    onChanged();
+    try {
+      await createCity(country.cca2, cityName.trim());
+      setCityName('');
+      refreshDetail();
+      onChanged();
+    } catch {
+      onError();
+    }
   }
 
   async function handleRemoveCity(id) {
-    await deleteCity(id);
-    refreshDetail();
-    onChanged();
+    try {
+      await deleteCity(id);
+      refreshDetail();
+      onChanged();
+    } catch {
+      onError();
+    }
   }
 
   async function handleAddAttraction(e) {
     e.preventDefault();
     if (!attractionName.trim()) return;
-    await createAttraction(country.cca2, attractionName.trim());
-    setAttractionName('');
-    refreshDetail();
-    onChanged();
+    try {
+      await createAttraction(country.cca2, attractionName.trim());
+      setAttractionName('');
+      refreshDetail();
+      onChanged();
+    } catch {
+      onError();
+    }
   }
 
   async function handleRemoveAttraction(id) {
-    await deleteAttraction(id);
-    refreshDetail();
-    onChanged();
+    try {
+      await deleteAttraction(id);
+      refreshDetail();
+      onChanged();
+    } catch {
+      onError();
+    }
   }
 
   return (

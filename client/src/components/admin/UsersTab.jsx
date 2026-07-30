@@ -15,11 +15,13 @@ export default function UsersTab() {
   const [loading, setLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [actionError, setActionError] = useState(null);
 
   function reload() {
     setLoading(true);
     listUsers()
       .then((data) => setUsers(data.users))
+      .catch(() => setActionError(t('common.somethingWentWrong')))
       .finally(() => setLoading(false));
   }
 
@@ -28,25 +30,34 @@ export default function UsersTab() {
   }, []);
 
   async function handleRoleChange(id, role) {
-    await updateUserRole(id, role);
-    reload();
+    setActionError(null);
+    try {
+      await updateUserRole(id, role);
+      reload();
+    } catch {
+      setActionError(t('common.somethingWentWrong'));
+    }
   }
 
   async function handleConfirmDelete() {
+    setActionError(null);
     setDeleting(true);
     try {
       await deleteUser(deleteTarget.id);
       setDeleteTarget(null);
       reload();
+    } catch {
+      setActionError(t('common.somethingWentWrong'));
     } finally {
       setDeleting(false);
     }
   }
 
-  if (loading) return null;
+  if (loading) return <p className="text-muted">{t('common.loading')}</p>;
 
   return (
     <div>
+      {actionError && !deleteTarget && <p className="mb-2 text-danger">{actionError}</p>}
       {/* Not one of §13's named screens, but a 6-column table still can't
           survive a narrow viewport — scrolls as a unit rather than wrapping
           each row out of alignment with the header. */}
@@ -86,7 +97,10 @@ export default function UsersTab() {
                     <button
                       type="button"
                       disabled={isSelf}
-                      onClick={() => setDeleteTarget(u)}
+                      onClick={() => {
+                        setActionError(null);
+                        setDeleteTarget(u);
+                      }}
                       className="text-muted underline disabled:opacity-50"
                     >
                       {t('admin.users.delete')}
@@ -103,6 +117,7 @@ export default function UsersTab() {
         <Modal onClose={() => setDeleteTarget(null)}>
           <p className="text-ink">{t('admin.users.deleteConfirm', { name: deleteTarget.name })}</p>
           <p className="mt-1 text-muted">{t('admin.users.deleteWarning')}</p>
+          {actionError && <p className="mt-2 text-danger">{actionError}</p>}
           <div className="mt-6 flex justify-center gap-6">
             <button type="button" onClick={() => setDeleteTarget(null)} className="text-ink underline">
               {t('common.cancel')}

@@ -5,7 +5,9 @@
     "wordmark": "expeditor",
     "cancel": "cancel",
     "confirmDiscard": "discard unsaved changes?",
-    "staleRate": "exchange rate may be outdated"
+    "staleRate": "exchange rate may be outdated",
+    "loading": "loading…",
+    "somethingWentWrong": "something went wrong — try again"
   },
   "landing": {
     "signIn": "sign in",

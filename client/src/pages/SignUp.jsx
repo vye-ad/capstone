@@ -17,10 +17,12 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setFormError(null);
 
     const payload = { name, email, password, countryCode };
     const parsed = registerSchema.safeParse(payload);
@@ -35,7 +37,8 @@ export default function SignUp() {
       await register(parsed.data);
       navigate('/home');
     } catch (err) {
-      setFieldErrors(err.fields ?? {});
+      if (err.fields) setFieldErrors(err.fields);
+      else setFormError(t('common.somethingWentWrong'));
     } finally {
       setSubmitting(false);
     }
@@ -87,6 +90,7 @@ export default function SignUp() {
             <p className="text-sm text-danger">{fieldErrors.countryCode}</p>
           )}
         </label>
+        {formError && <p className="text-danger">{formError}</p>}
         <button
           type="submit"
           disabled={submitting}

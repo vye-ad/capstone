@@ -5,7 +5,9 @@
     "wordmark": "expeditor",
     "cancel": "cancelar",
     "confirmDiscard": "¿descartar los cambios sin guardar?",
-    "staleRate": "el tipo de cambio podría estar desactualizado"
+    "staleRate": "el tipo de cambio podría estar desactualizado",
+    "loading": "cargando…",
+    "somethingWentWrong": "algo salió mal — inténtalo de nuevo"
   },
   "landing": {
     "signIn": "iniciar sesión",

@@ -49,6 +49,7 @@ export default function CreateEditTrip() {
   const [statusManuallySet, setStatusManuallySet] = useState(false);
   const [initialStatusIsManual, setInitialStatusIsManual] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [dirty, setDirty] = useState(false);
 
@@ -121,6 +122,7 @@ export default function CreateEditTrip() {
       return;
     }
     setFieldErrors({});
+    setFormError(null);
 
     setSubmitting(true);
     try {
@@ -131,13 +133,21 @@ export default function CreateEditTrip() {
       }
       navigate('/trips');
     } catch (err) {
-      setFieldErrors(err.fields ?? {});
+      if (err.fields) setFieldErrors(err.fields);
+      else setFormError(t('common.somethingWentWrong'));
     } finally {
       setSubmitting(false);
     }
   }
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen px-4 py-6">
+        <PageHeader page={t(isEditMode ? 'pages.editTrip' : 'pages.createTrip')} />
+        <p className="text-muted">{t('common.loading')}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen px-4 py-6">
@@ -287,6 +297,8 @@ export default function CreateEditTrip() {
           </label>
         </div>
         </div>
+
+        {formError && <p className="mt-4 text-center text-danger">{formError}</p>}
 
         <div className="mt-8 flex justify-center gap-6">
           <button type="button" onClick={handleCancel} className="text-ink underline">

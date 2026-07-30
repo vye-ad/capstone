@@ -24,6 +24,7 @@ export default function MyTrips() {
     setLoading(true);
     listTrips(filter === 'all' ? {} : { status: filter })
       .then((data) => setTrips(data.trips))
+      .catch(() => setTrips([]))
       .finally(() => setLoading(false));
   }, [filter]);
 
@@ -64,7 +65,9 @@ export default function MyTrips() {
         ))}
       </div>
 
-      {loading ? null : trips.length === 0 ? (
+      {loading ? (
+        <p className="mt-8 text-muted">{t('common.loading')}</p>
+      ) : trips.length === 0 ? (
         <p className="mt-8 text-muted">
           {filter === 'all' ? (
             <>

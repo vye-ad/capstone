@@ -5,7 +5,9 @@
     "wordmark": "expeditor",
     "cancel": "annuler",
     "confirmDiscard": "abandonner les modifications non enregistrées ?",
-    "staleRate": "le taux de change est peut-être obsolète"
+    "staleRate": "le taux de change est peut-être obsolète",
+    "loading": "chargement…",
+    "somethingWentWrong": "une erreur est survenue — réessayez"
   },
   "landing": {
     "signIn": "se connecter",

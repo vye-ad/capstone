@@ -28,7 +28,14 @@ export default function CountryDetail() {
       .finally(() => setLoading(false));
   }, [cca2]);
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen px-4 py-6">
+        <PageHeader page={t('pages.explore')} />
+        <p className="text-muted">{t('common.loading')}</p>
+      </div>
+    );
+  }
 
   if (notFound || !country) {
     return (
