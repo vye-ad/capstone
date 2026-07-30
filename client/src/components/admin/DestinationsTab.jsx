@@ -36,25 +36,27 @@ export default function DestinationsTab() {
   if (loading) return null;
 
   return (
-    <div>
-      <div className="grid grid-cols-5 gap-4 px-2 text-muted">
-        <span>{t('admin.destinations.name')}</span>
-        <span>{t('admin.destinations.featured')}</span>
-        <span>{t('admin.destinations.image')}</span>
-        <span>{t('admin.destinations.cities')}</span>
-        <span>{t('admin.destinations.attractions')}</span>
-      </div>
-      <div className="mt-2 flex flex-col gap-2">
-        {countries.map((c) => (
-          <DestinationRow
-            key={c.cca2}
-            country={c}
-            expanded={expandedCca2 === c.cca2}
-            onToggle={() => setExpandedCca2(expandedCca2 === c.cca2 ? null : c.cca2)}
-            onToggleFeatured={() => handleToggleFeatured(c.cca2, c.isFeatured)}
-            onChanged={reload}
-          />
-        ))}
+    <div className="overflow-x-auto">
+      <div className="min-w-[640px]">
+        <div className="grid grid-cols-5 gap-4 px-2 text-muted">
+          <span>{t('admin.destinations.name')}</span>
+          <span>{t('admin.destinations.featured')}</span>
+          <span>{t('admin.destinations.image')}</span>
+          <span>{t('admin.destinations.cities')}</span>
+          <span>{t('admin.destinations.attractions')}</span>
+        </div>
+        <div className="mt-2 flex flex-col gap-2">
+          {countries.map((c) => (
+            <DestinationRow
+              key={c.cca2}
+              country={c}
+              expanded={expandedCca2 === c.cca2}
+              onToggle={() => setExpandedCca2(expandedCca2 === c.cca2 ? null : c.cca2)}
+              onToggleFeatured={() => handleToggleFeatured(c.cca2, c.isFeatured)}
+              onChanged={reload}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -153,7 +155,7 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
             {t('admin.destinations.uploadImage')}
           </label>
 
-          <div className="flex gap-8">
+          <div className="flex flex-col gap-8 lg:flex-row">
             <div className="flex-1">
               <h4 className="text-muted">{t('admin.destinations.cities')}</h4>
               <ul>

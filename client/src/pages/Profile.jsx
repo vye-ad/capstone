@@ -135,8 +135,8 @@ export default function Profile() {
     <div className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.profile')} />
 
-      <div className="mt-6 flex flex-col gap-8 md:flex-row">
-        <div className="flex flex-col items-center gap-2 md:items-start">
+      <div className="mt-6 flex flex-col gap-8 lg:flex-row">
+        <div className="flex flex-col items-center gap-2 lg:items-start">
           {user.avatarUrl ? (
             <img
               src={user.avatarUrl}

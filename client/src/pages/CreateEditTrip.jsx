@@ -144,7 +144,7 @@ export default function CreateEditTrip() {
       <PageHeader page={t(isEditMode ? 'pages.editTrip' : 'pages.createTrip')} />
 
       <form onSubmit={handleSubmit}>
-        <div className="mt-6 flex flex-col gap-8 md:flex-row">
+        <div className="mt-6 flex flex-col gap-8 lg:flex-row">
         <div className="flex flex-1 flex-col gap-6">
           <label className="flex flex-col gap-1">
             <span className="text-muted">{t('createTrip.chooseDestination')}</span>

@@ -47,49 +47,56 @@ export default function UsersTab() {
 
   return (
     <div>
-      <div className="grid grid-cols-6 gap-4 px-2 text-muted">
-        <span>{t('admin.users.name')}</span>
-        <span>{t('admin.users.email')}</span>
-        <span>{t('admin.users.country')}</span>
-        <span>{t('admin.users.role')}</span>
-        <span>{t('admin.users.memberSince')}</span>
-        <span>{t('admin.users.tripCount')}</span>
-      </div>
-      <div className="mt-2 flex flex-col gap-2">
-        {users.map((u) => {
-          const isSelf = u.id === currentUser.id;
-          return (
-            <div
-              key={u.id}
-              className="grid grid-cols-6 items-center gap-4 rounded-pill border border-hairline px-4 py-2 text-ink"
-            >
-              <span>{u.name}</span>
-              <span>{u.email}</span>
-              <span>{u.countryName}</span>
-              <select
-                value={u.role}
-                disabled={isSelf}
-                onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                className="bg-transparent disabled:opacity-50"
-              >
-                <option value="USER">USER</option>
-                <option value="ADMIN">ADMIN</option>
-              </select>
-              <span>{formatDate(u.createdAt, i18n.language)}</span>
-              <div className="flex items-center justify-between">
-                <span>{u.tripCount}</span>
-                <button
-                  type="button"
-                  disabled={isSelf}
-                  onClick={() => setDeleteTarget(u)}
-                  className="text-muted underline disabled:opacity-50"
+      {/* Not one of §13's named screens, but a 6-column table still can't
+          survive a narrow viewport — scrolls as a unit rather than wrapping
+          each row out of alignment with the header. */}
+      <div className="overflow-x-auto">
+        <div className="min-w-[720px]">
+          <div className="grid grid-cols-6 gap-4 px-2 text-muted">
+            <span>{t('admin.users.name')}</span>
+            <span>{t('admin.users.email')}</span>
+            <span>{t('admin.users.country')}</span>
+            <span>{t('admin.users.role')}</span>
+            <span>{t('admin.users.memberSince')}</span>
+            <span>{t('admin.users.tripCount')}</span>
+          </div>
+          <div className="mt-2 flex flex-col gap-2">
+            {users.map((u) => {
+              const isSelf = u.id === currentUser.id;
+              return (
+                <div
+                  key={u.id}
+                  className="grid grid-cols-6 items-center gap-4 rounded-pill border border-hairline px-4 py-2 text-ink"
                 >
-                  {t('admin.users.delete')}
-                </button>
-              </div>
-            </div>
-          );
-        })}
+                  <span>{u.name}</span>
+                  <span>{u.email}</span>
+                  <span>{u.countryName}</span>
+                  <select
+                    value={u.role}
+                    disabled={isSelf}
+                    onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                    className="bg-transparent disabled:opacity-50"
+                  >
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
+                  <span>{formatDate(u.createdAt, i18n.language)}</span>
+                  <div className="flex items-center justify-between">
+                    <span>{u.tripCount}</span>
+                    <button
+                      type="button"
+                      disabled={isSelf}
+                      onClick={() => setDeleteTarget(u)}
+                      className="text-muted underline disabled:opacity-50"
+                    >
+                      {t('admin.users.delete')}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {deleteTarget && (

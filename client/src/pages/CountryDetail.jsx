@@ -59,8 +59,8 @@ export default function CountryDetail() {
         <span>{localizedCountryName(country, i18n.language)}</span>
       </div>
 
-      <div className="mt-6 flex flex-col gap-8 md:flex-row">
-        <div className="md:w-1/3">
+      <div className="mt-6 flex flex-col gap-8 lg:flex-row">
+        <div className="lg:w-1/3">
           <img
             src={country.imageUrl}
             alt={localizedCountryName(country, i18n.language)}

@@ -73,7 +73,7 @@ export default function MyTrips() {
         </p>
       ) : (
         <div className="mt-8">
-          <div className="grid grid-cols-6 gap-4 px-4 text-muted">
+          <div className="hidden grid-cols-6 gap-4 px-4 text-muted lg:grid">
             <span>{t('myTrips.date')}</span>
             <span>{t('myTrips.destination')}</span>
             <span>{t('myTrips.status')}</span>

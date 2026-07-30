@@ -27,47 +27,71 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
 
   const convertedBudget = convertAmount(trip.budgetAmount, trip.budgetCurrency, user.currency, rates);
   const formattedBudget = formatCurrency(convertedBudget, user.currency, i18n.language);
+  const countryName = localizedCountryName(trip.country, i18n.language);
+  const dateRange = `${formatDate(trip.startDate, i18n.language)} - ${formatDate(trip.endDate, i18n.language)}`;
+
+  const statusBadge = (
+    <span className="flex items-center gap-2 text-ink">
+      <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
+      {t(`createTrip.status_${trip.status}`)}
+    </span>
+  );
+  const flagAndName = (
+    <span className="flex items-center gap-2 text-ink">
+      <img src={trip.country.flagSvgUrl} alt={countryName} className="h-4 w-6" />
+      {countryName}
+    </span>
+  );
+  const actions = (
+    <span className="flex gap-4 text-muted">
+      <Link to={`/trips/${trip.id}/edit`}>{t('myTrips.edit')}</Link>
+      <button type="button" onClick={onDeleteClick}>
+        {t('myTrips.delete')}
+      </button>
+    </span>
+  );
+  const chevron = (
+    <button type="button" onClick={onToggle} className="text-ink">
+      {expanded ? '⌃' : '⌄'}
+    </button>
+  );
 
   return (
     <div className="rounded-pill border border-hairline px-4 py-3">
-      <div className="grid grid-cols-6 items-center gap-4">
-        <span className="text-ink">
-          {formatDate(trip.startDate, i18n.language)} - {formatDate(trip.endDate, i18n.language)}
-        </span>
-        <span className="flex items-center gap-2 text-ink">
-          <img src={trip.country.flagSvgUrl} alt={localizedCountryName(trip.country, i18n.language)} className="h-4 w-6" />
-          {localizedCountryName(trip.country, i18n.language)}
-        </span>
-        <span className="flex items-center gap-2 text-ink">
-          <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
-          {t(`createTrip.status_${trip.status}`)}
-        </span>
+      {/* §13: a five-column table doesn't survive a narrow viewport — this
+          is a genuinely different card layout below lg, not a scaled table. */}
+      <div className="flex flex-col gap-2 lg:hidden">
+        <div className="flex items-center justify-between">
+          <span className="text-ink">{dateRange}</span>
+          {flagAndName}
+        </div>
+        <div className="flex items-center justify-between">
+          {statusBadge}
+          <span className="text-ink">{formattedBudget}</span>
+        </div>
+        <div className="flex items-center justify-between">
+          {actions}
+          {chevron}
+        </div>
+      </div>
+
+      <div className="hidden lg:grid lg:grid-cols-6 lg:items-center lg:gap-4">
+        <span className="text-ink">{dateRange}</span>
+        {flagAndName}
+        {statusBadge}
         <span className="text-ink">{formattedBudget}</span>
-        <span className="flex gap-4 text-muted">
-          <Link to={`/trips/${trip.id}/edit`}>{t('myTrips.edit')}</Link>
-          <button type="button" onClick={onDeleteClick}>
-            {t('myTrips.delete')}
-          </button>
-        </span>
-        <button type="button" onClick={onToggle} className="justify-self-end text-ink">
-          {expanded ? '⌃' : '⌄'}
-        </button>
+        {actions}
+        <span className="justify-self-end">{chevron}</span>
       </div>
 
       {expanded && (
         <div className="mt-4 border-t border-hairline pt-4">
           <div className="flex items-center justify-between">
-            <span className="flex items-center gap-2 text-ink">
-              <img src={trip.country.flagSvgUrl} alt={localizedCountryName(trip.country, i18n.language)} className="h-4 w-6" />
-              {localizedCountryName(trip.country, i18n.language)}
-            </span>
-            <span className="flex items-center gap-2 text-ink">
-              <span className={`h-2 w-2 rounded-full ${STATUS_DOT_CLASS[trip.status]}`} />
-              {t(`createTrip.status_${trip.status}`)}
-            </span>
+            {flagAndName}
+            {statusBadge}
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
             <div>
               <p className="text-muted">{t('createTrip.startDay')}</p>
               <p className="text-muted">{formatDate(trip.startDate, i18n.language)}</p>
@@ -82,7 +106,7 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             <div>
               <p className="text-muted">{t('createTrip.tripDetails')}</p>
               <p className="text-muted">

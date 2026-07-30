@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { listTrips } from '../lib/trips.js';
 import LocaleCurrencySwitcher from '../components/LocaleCurrencySwitcher.jsx';
+import HeaderMenu from '../components/HeaderMenu.jsx';
 import { localizedCountryName } from '../lib/countryName.js';
 
 function todayUTC() {
@@ -48,7 +49,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col px-4 py-6">
       <div className="flex items-center justify-between">
         <div className="text-[32px] text-ink">xpdtr</div>
-        <div className="flex items-center gap-6">
+        <HeaderMenu>
           {user.role === 'ADMIN' && (
             <Link to="/admin" className="text-ink underline">
               {t('pages.admin')}
@@ -58,10 +59,28 @@ export default function Home() {
           <button type="button" onClick={logout} className="text-ink underline">
             {t('common.signOut')}
           </button>
-        </div>
+        </HeaderMenu>
       </div>
 
-      <div className="flex flex-1 items-center justify-center">
+      {/* §13: the compass layout doesn't fit narrow screens — stack the
+          links vertically below lg instead of scaling the desktop layout. */}
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 lg:hidden">
+        <div role="presentation" className="h-24 w-24 rounded-full bg-hairline/40" />
+        <Link to="/profile" className="text-ink underline">
+          {t('home.nav.profile')}
+        </Link>
+        <Link to="/explore" className="text-ink underline">
+          {t('home.nav.explore')}
+        </Link>
+        <Link to="/trips" className="text-ink underline">
+          {t('home.nav.myTrips')}
+        </Link>
+        <Link to="/trips/new" className="text-xl text-ink underline">
+          +
+        </Link>
+      </div>
+
+      <div className="hidden flex-1 items-center justify-center lg:flex">
         <div className="grid grid-cols-3 grid-rows-3 items-center justify-items-center gap-6">
           <div />
           <Link to="/profile" className="text-ink underline">
@@ -76,7 +95,7 @@ export default function Home() {
             {t('home.nav.myTrips')}
           </Link>
           <div />
-          <Link to="/trips/new" className="text-ink text-xl underline">
+          <Link to="/trips/new" className="text-xl text-ink underline">
             +
           </Link>
           <div />

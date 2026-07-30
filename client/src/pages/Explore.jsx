@@ -70,7 +70,7 @@ export default function Explore() {
             </div>
           )}
         </div>
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <StaticGlobe />
         </div>
       </div>
