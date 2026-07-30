@@ -9,7 +9,7 @@ export default function Admin() {
   const [tab, setTab] = useState('destinations');
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.admin')} />
 
       <div className="mt-4 flex gap-6">
@@ -30,6 +30,6 @@ export default function Admin() {
       </div>
 
       <div className="mt-6">{tab === 'destinations' ? <DestinationsTab /> : <UsersTab />}</div>
-    </div>
+    </main>
   );
 }

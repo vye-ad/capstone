@@ -42,7 +42,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-8 px-4 py-8">
+    <main className="flex min-h-screen flex-col items-center gap-8 px-4 py-8">
       <div className="w-full text-left text-[32px] text-ink">xpdtr</div>
       <StaticGlobe />
       <form onSubmit={handleSubmit} className="flex w-full max-w-xs flex-col gap-6">
@@ -80,6 +80,6 @@ export default function SignIn() {
       <Link to="/signup" className="text-ink underline">
         {t('landing.signUp')}
       </Link>
-    </div>
+    </main>
   );
 }

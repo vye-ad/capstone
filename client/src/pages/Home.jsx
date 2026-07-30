@@ -46,7 +46,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col px-4 py-6">
+    <main className="flex min-h-screen flex-col px-4 py-6">
       <div className="flex items-center justify-between">
         <div className="text-[32px] text-ink">xpdtr</div>
         <HeaderMenu>
@@ -126,6 +126,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

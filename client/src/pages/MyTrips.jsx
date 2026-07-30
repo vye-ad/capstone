@@ -49,7 +49,7 @@ export default function MyTrips() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.myTrips')} />
 
       <div className="mt-4 flex gap-4">
@@ -129,6 +129,6 @@ export default function MyTrips() {
           </div>
         </Modal>
       )}
-    </div>
+    </main>
   );
 }

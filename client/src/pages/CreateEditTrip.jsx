@@ -142,15 +142,15 @@ export default function CreateEditTrip() {
 
   if (loading) {
     return (
-      <div className="min-h-screen px-4 py-6">
+      <main className="min-h-screen px-4 py-6">
         <PageHeader page={t(isEditMode ? 'pages.editTrip' : 'pages.createTrip')} />
         <p className="text-muted">{t('common.loading')}</p>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t(isEditMode ? 'pages.editTrip' : 'pages.createTrip')} />
 
       <form onSubmit={handleSubmit}>
@@ -313,6 +313,6 @@ export default function CreateEditTrip() {
           </button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }

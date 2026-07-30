@@ -30,19 +30,19 @@ export default function CountryDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen px-4 py-6">
+      <main className="min-h-screen px-4 py-6">
         <PageHeader page={t('pages.explore')} />
         <p className="text-muted">{t('common.loading')}</p>
-      </div>
+      </main>
     );
   }
 
   if (notFound || !country) {
     return (
-      <div className="min-h-screen px-4 py-6">
+      <main className="min-h-screen px-4 py-6">
         <PageHeader page={t('pages.explore')} />
         <p className="text-muted">{t('explore.noResults')}</p>
-      </div>
+      </main>
     );
   }
 
@@ -58,7 +58,7 @@ export default function CountryDetail() {
     rateValue !== null ? new Intl.NumberFormat(i18n.language, { maximumFractionDigits: 2 }).format(rateValue) : null;
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.explore')} />
 
       <div className="flex items-center gap-2 text-ink">
@@ -124,6 +124,6 @@ export default function CountryDetail() {
           {t('countryDetail.planATrip')} {'>'}
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

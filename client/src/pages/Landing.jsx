@@ -11,7 +11,7 @@ export default function Landing() {
   if (user) return <Navigate to="/home" replace />;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 text-center">
       <h1 className="text-[32px] font-normal text-ink">{t('common.wordmark')}</h1>
       <StaticGlobe />
       <div className="flex flex-col gap-4">
@@ -22,6 +22,6 @@ export default function Landing() {
           {t('landing.signUp')}
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

@@ -139,7 +139,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.profile')} />
 
       <div className="mt-6 flex flex-col gap-8 lg:flex-row">
@@ -338,6 +338,6 @@ export default function Profile() {
           </form>
         </Modal>
       )}
-    </div>
+    </main>
   );
 }

@@ -38,7 +38,7 @@ export default function Explore() {
   const showingSearch = results !== null;
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.explore')} />
 
       <input
@@ -76,6 +76,6 @@ export default function Explore() {
           <StaticGlobe />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
