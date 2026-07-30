@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
 import CountrySelect from '../components/CountrySelect.jsx';
 import { useAuth } from '../lib/AuthContext.jsx';
+import { useNavigationDirection } from '../lib/NavigationDirectionContext.jsx';
 import { createTrip, getTrip, updateTrip } from '../lib/trips.js';
 import { deriveStatus } from '../lib/tripStatus.js';
 import {
@@ -32,6 +33,7 @@ export default function CreateEditTrip() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { goBack } = useNavigationDirection();
   const { id } = useParams();
   const isEditMode = Boolean(id);
   const [searchParams] = useSearchParams();
@@ -91,7 +93,7 @@ export default function CreateEditTrip() {
 
   function handleCancel() {
     if (dirty && !window.confirm(t('common.confirmDiscard'))) return;
-    navigate(-1);
+    goBack();
   }
 
   async function handleSubmit(e) {

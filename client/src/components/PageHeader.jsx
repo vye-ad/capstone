@@ -1,17 +1,17 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../lib/AuthContext.jsx';
+import { useNavigationDirection } from '../lib/NavigationDirectionContext.jsx';
 import LocaleCurrencySwitcher from './LocaleCurrencySwitcher.jsx';
 import HeaderMenu from './HeaderMenu.jsx';
 
 export default function PageHeader({ page }) {
   const { t } = useTranslation();
   const { logout } = useAuth();
-  const navigate = useNavigate();
+  const { goBack } = useNavigationDirection();
 
   return (
     <div className="flex items-center justify-between py-4">
-      <button type="button" onClick={() => navigate(-1)} className="text-ink underline">
+      <button type="button" onClick={goBack} className="text-ink underline">
         {'< '}
         {t('common.back')}
       </button>

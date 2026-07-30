@@ -1178,7 +1178,7 @@ Mapped to the four capstone milestone weeks. **Do not start a week's work before
 
 ### Week 4 — polish and optional
 
-- [ ] Page transitions (§13)
+- [x] Page transitions (§13)
 - [ ] `[OPTIONAL]` 3D globe (§14)
 - [x] Empty states for every list
 - [x] Loading and error states for every async operation

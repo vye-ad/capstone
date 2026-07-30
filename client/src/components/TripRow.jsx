@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { localizedCountryName } from '../lib/countryName.js';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { useRates } from '../lib/useRates.js';
@@ -24,6 +25,7 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { rates } = useRates();
+  const prefersReducedMotion = useReducedMotion();
 
   const convertedBudget = convertAmount(trip.budgetAmount, trip.budgetCurrency, user.currency, rates);
   const formattedBudget = formatCurrency(convertedBudget, user.currency, i18n.language);
@@ -84,49 +86,61 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
         <span className="justify-self-end">{chevron}</span>
       </div>
 
-      {expanded && (
-        <div className="mt-4 border-t border-hairline pt-4">
-          <div className="flex items-center justify-between">
-            {flagAndName}
-            {statusBadge}
-          </div>
+      {/* §13: expanding a row is a height transition in place, never a pan —
+          it's not a navigation, so the route-transition treatment doesn't apply. */}
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: 'easeOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mt-4 border-t border-hairline pt-4">
+              <div className="flex items-center justify-between">
+                {flagAndName}
+                {statusBadge}
+              </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <div>
-              <p className="text-muted">{t('createTrip.startDay')}</p>
-              <p className="text-muted">{formatDate(trip.startDate, i18n.language)}</p>
-            </div>
-            <div>
-              <p className="text-muted">{t('createTrip.endDay')}</p>
-              <p className="text-muted">{formatDate(trip.endDate, i18n.language)}</p>
-            </div>
-            <div>
-              <p className="text-muted">{t('createTrip.budget')}</p>
-              <p className="text-muted">{formattedBudget}</p>
-            </div>
-          </div>
+              <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <div>
+                  <p className="text-muted">{t('createTrip.startDay')}</p>
+                  <p className="text-muted">{formatDate(trip.startDate, i18n.language)}</p>
+                </div>
+                <div>
+                  <p className="text-muted">{t('createTrip.endDay')}</p>
+                  <p className="text-muted">{formatDate(trip.endDate, i18n.language)}</p>
+                </div>
+                <div>
+                  <p className="text-muted">{t('createTrip.budget')}</p>
+                  <p className="text-muted">{formattedBudget}</p>
+                </div>
+              </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div>
-              <p className="text-muted">{t('createTrip.tripDetails')}</p>
-              <p className="text-muted">
-                {trip.transportType ? t(`createTrip.transport_${trip.transportType}`) : '—'}
-              </p>
-            </div>
-            <div>
-              <p className="text-muted">{t('createTrip.notes')}</p>
-              <p className="text-muted">{trip.notes || '—'}</p>
-            </div>
-          </div>
+              <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div>
+                  <p className="text-muted">{t('createTrip.tripDetails')}</p>
+                  <p className="text-muted">
+                    {trip.transportType ? t(`createTrip.transport_${trip.transportType}`) : '—'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-muted">{t('createTrip.notes')}</p>
+                  <p className="text-muted">{trip.notes || '—'}</p>
+                </div>
+              </div>
 
-          <div className="mt-4">
-            <p className="text-muted">{t('createTrip.accommodationDetails')}</p>
-            <p className="text-muted">
-              {trip.accommodationType ? t(`createTrip.accommodation_${trip.accommodationType}`) : '—'}
-            </p>
-          </div>
-        </div>
-      )}
+              <div className="mt-4">
+                <p className="text-muted">{t('createTrip.accommodationDetails')}</p>
+                <p className="text-muted">
+                  {trip.accommodationType ? t(`createTrip.accommodation_${trip.accommodationType}`) : '—'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
