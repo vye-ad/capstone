@@ -13,8 +13,12 @@ TODO — added once the core screens are built.
 
 ## Live deployment
 
-TODO — frontend on Vercel, backend on Render, database on Prisma Postgres.
-See [Deployment](#deployment) below for the setup steps; URL added here once live.
+**https://capstone-lovat-kappa.vercel.app** (frontend, Vercel) — backend on
+Render (`https://expeditor-api.onrender.com`), database on Prisma Postgres.
+See [Deployment](#deployment) below for the setup used to get it there.
+
+Note: Render's free tier spins the backend down after 15 min idle — the
+first request after a quiet spell takes 30-60s to wake up.
 
 ## Tech stack
 
