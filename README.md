@@ -211,6 +211,7 @@ field.
 | Tailwind CSS | Styling | https://tailwindcss.com |
 | Prisma | ORM | https://www.prisma.io |
 | react-i18next | Internationalisation | https://react.i18next.com |
+| `motion` (Framer Motion) | Page transitions | https://motion.dev |
 
 Updated as each dependency is actually introduced.
 
