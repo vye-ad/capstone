@@ -66,10 +66,16 @@ export default function MyTrips() {
 
       {loading ? null : trips.length === 0 ? (
         <p className="mt-8 text-muted">
-          {t('myTrips.empty')}{' '}
-          <Link to="/trips/new" className="underline">
-            {t('countryDetail.planATrip')}
-          </Link>
+          {filter === 'all' ? (
+            <>
+              {t('myTrips.empty')}{' '}
+              <Link to="/trips/new" className="underline">
+                {t('countryDetail.planATrip')}
+              </Link>
+            </>
+          ) : (
+            t('myTrips.emptyFiltered')
+          )}
         </p>
       ) : (
         <div className="mt-8">

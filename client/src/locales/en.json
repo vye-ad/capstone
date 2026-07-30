@@ -93,6 +93,7 @@
     "edit": "edit",
     "delete": "delete",
     "empty": "you have no trips yet",
+    "emptyFiltered": "no trips match this filter",
     "filter_all": "all",
     "filter_upcoming": "upcoming",
     "filter_ongoing": "ongoing",

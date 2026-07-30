@@ -4,7 +4,7 @@ import { listCountries, getCountry } from '../lib/countries.js';
 import { localizedCountryName } from '../lib/countryName.js';
 
 export default function CountrySelect({ id, value, onChange, placeholder }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [query, setQuery] = useState('');
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
@@ -54,24 +54,28 @@ export default function CountrySelect({ id, value, onChange, placeholder }) {
         autoComplete="off"
         className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
       />
-      {open && options.length > 0 && (
+      {open && (options.length > 0 || query.trim()) && (
         <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto border border-hairline bg-paper">
-          {options.map((c) => (
-            <li key={c.cca2}>
-              <button
-                type="button"
-                onClick={() => {
-                  onChange(c.cca2);
-                  setSelectedLabel(localizedCountryName(c, i18n.language));
-                  setOpen(false);
-                }}
-                className="flex w-full items-center gap-2 px-2 py-1 text-left text-ink hover:bg-hairline/20"
-              >
-                <img src={c.flagSvgUrl} alt="" className="h-3 w-5" />
-                {localizedCountryName(c, i18n.language)}
-              </button>
-            </li>
-          ))}
+          {options.length === 0 ? (
+            <li className="px-2 py-1 text-muted">{t('explore.noResults')}</li>
+          ) : (
+            options.map((c) => (
+              <li key={c.cca2}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(c.cca2);
+                    setSelectedLabel(localizedCountryName(c, i18n.language));
+                    setOpen(false);
+                  }}
+                  className="flex w-full items-center gap-2 px-2 py-1 text-left text-ink hover:bg-hairline/20"
+                >
+                  <img src={c.flagSvgUrl} alt="" className="h-3 w-5" />
+                  {localizedCountryName(c, i18n.language)}
+                </button>
+              </li>
+            ))
+          )}
         </ul>
       )}
     </div>

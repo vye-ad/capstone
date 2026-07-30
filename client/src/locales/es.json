@@ -93,6 +93,7 @@
     "edit": "editar",
     "delete": "eliminar",
     "empty": "aún no tienes viajes",
+    "emptyFiltered": "ningún viaje coincide con este filtro",
     "filter_all": "todos",
     "filter_upcoming": "próximos",
     "filter_ongoing": "en curso",
