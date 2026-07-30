@@ -1185,7 +1185,7 @@ Mapped to the four capstone milestone weeks. **Do not start a week's work before
 - [x] Accessibility pass: keyboard navigation, visible focus rings, alt text, form labels
 - [x] Lighthouse pass
 - [x] README final
-- [ ] Tests if time allows — Jest + Supertest (backend), Vitest (frontend)
+- [x] Tests if time allows — Jest + Supertest (backend), Vitest (frontend)
 
 **If week 4 runs short, cut the globe first, then transitions.** Both are good-to-haves. Every week-3 item is a graded must-have.
 
