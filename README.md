@@ -94,6 +94,34 @@ cd server && npm run dev
 cd client && npm run dev
 ```
 
+## Testing
+
+Backend: Jest + Supertest, run against a real Postgres database (not
+mocked) — consistent with this project's "verify for real" approach
+elsewhere. Covers the trip status resolver, Zod validation schemas, and
+the three trickiest documented invariants: identical login errors for
+unknown-email vs wrong-password (§9), 404-not-403 on another user's
+trip (§8), and the admin self-modification guard (§10.10).
+
+```bash
+cd server
+createdb expeditor_test          # one-time
+cp .env.test.example .env.test   # fill in your local Postgres credentials
+DATABASE_URL="<.env.test's DATABASE_URL>" npx prisma migrate deploy
+npm test
+```
+
+Frontend: Vitest + React Testing Library. Covers the pure helpers
+(currency conversion, status derivation, country-name localisation, Zod
+error mapping) and `CountrySelect`'s search/empty-state/keyboard
+behaviour.
+
+```bash
+cd client && npm test
+```
+
+Both suites run in CI on every push (see `.github/workflows/ci.yml`).
+
 ## API overview
 
 Import `postman/expeditor.postman_collection.json` plus the
