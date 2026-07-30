@@ -5,6 +5,7 @@ import { useAuth } from '../lib/AuthContext.jsx';
 import { listTrips } from '../lib/trips.js';
 import LocaleCurrencySwitcher from '../components/LocaleCurrencySwitcher.jsx';
 import HeaderMenu from '../components/HeaderMenu.jsx';
+import GlobeView from '../components/GlobeView.jsx';
 import { localizedCountryName } from '../lib/countryName.js';
 
 function todayUTC() {
@@ -65,7 +66,7 @@ export default function Home() {
       {/* §13: the compass layout doesn't fit narrow screens — stack the
           links vertically below lg instead of scaling the desktop layout. */}
       <div className="flex flex-1 flex-col items-center justify-center gap-6 lg:hidden">
-        <div role="presentation" className="h-24 w-24 rounded-full bg-hairline/40" />
+        <GlobeView mode="rotate" size={96} />
         <Link to="/profile" className="text-ink underline">
           {t('home.nav.profile')}
         </Link>
@@ -90,7 +91,7 @@ export default function Home() {
           <Link to="/explore" className="text-ink underline">
             {t('home.nav.explore')}
           </Link>
-          <div role="presentation" className="h-24 w-24 rounded-full bg-hairline/40" />
+          <GlobeView mode="rotate" size={96} />
           <Link to="/trips" className="text-ink underline">
             {t('home.nav.myTrips')}
           </Link>

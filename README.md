@@ -94,6 +94,18 @@ cd server && npm run dev
 cd client && npm run dev
 ```
 
+### Regenerating the globe's border data
+
+`client/public/data/countries-topology.json` (§14, the 3D globe's country
+border highlight layer) is generated, not hand-written. To rebuild it:
+
+```bash
+cd client
+curl -sL https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson \
+  -o scripts/ne_110m_admin_0_countries.geojson
+node scripts/build-country-topology.mjs
+```
+
 ## Testing
 
 Backend: Jest + Supertest, run against a real Postgres database (not
@@ -212,6 +224,10 @@ field.
 | Prisma | ORM | https://www.prisma.io |
 | react-i18next | Internationalisation | https://react.i18next.com |
 | `motion` (Framer Motion) | Page transitions | https://motion.dev |
+| `react-globe.gl` / `globe.gl` / `three-globe` | 3D globe (§14) | https://github.com/vasturiano/react-globe.gl |
+| Natural Earth (public domain) | Country border data for the globe's highlight layer | https://www.naturalearthdata.com |
+| Earth texture from the `three-globe` example gallery (MIT) | Dark globe texture, reused as the static PNG fallback too | https://github.com/vasturiano/three-globe |
+| `topojson-client` / `topojson-server` / `topojson-simplify` | Converts the Natural Earth GeoJSON to a compact TopoJSON at build time, then back to GeoJSON at runtime | https://github.com/topojson |
 
 Updated as each dependency is actually introduced.
 

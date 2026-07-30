@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader.jsx';
+import GlobeView from '../components/GlobeView.jsx';
 import { getCountry } from '../lib/countries.js';
 import { localizedCountryName } from '../lib/countryName.js';
 import { useAuth } from '../lib/AuthContext.jsx';
@@ -118,6 +119,25 @@ export default function CountryDetail() {
           </div>
         </div>
       </div>
+
+      {/* §14: 3D globe, progressive enhancement — rotates to the country and
+          highlights its border. Falls back to the static globe (narrow
+          viewport / reduced motion / no WebGL); removing this block entirely
+          changes nothing else on the page. */}
+      {country.latitude != null && country.longitude != null && (
+        <div className="mt-8 flex justify-center">
+          <GlobeView
+            mode="country"
+            size={220}
+            country={{
+              cca3: country.cca3,
+              nameEn: country.nameEn,
+              latitude: country.latitude,
+              longitude: country.longitude,
+            }}
+          />
+        </div>
+      )}
 
       <div className="mt-8 flex justify-center">
         <Link to={`/trips/new?country=${country.cca2}`} className="text-ink underline">

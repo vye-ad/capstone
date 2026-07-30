@@ -1,26 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useNavigationDirection } from '../lib/NavigationDirectionContext.jsx';
+import { useMediaQuery } from '../lib/useMediaQuery.js';
 
 // §13: below this width, shorten the pan distance so it doesn't fight the
 // browser's back-swipe gesture.
 const NARROW_QUERY = '(max-width: 639px)';
 const WIDE_PAN_PERCENT = 100;
 const NARROW_PAN_PERCENT = 30;
-
-function useIsNarrow() {
-  const [narrow, setNarrow] = useState(() => window.matchMedia(NARROW_QUERY).matches);
-
-  useEffect(() => {
-    const mq = window.matchMedia(NARROW_QUERY);
-    const handleChange = (e) => setNarrow(e.matches);
-    mq.addEventListener('change', handleChange);
-    return () => mq.removeEventListener('change', handleChange);
-  }, []);
-
-  return narrow;
-}
 
 // Variant functions receive the AnimatePresence `custom` value at animation
 // time — this is what lets an *already-mounted, exiting* page react to a
@@ -47,7 +35,7 @@ export default function PageTransition({ children }) {
   const location = useLocation();
   const { isBack, resetToForward } = useNavigationDirection();
   const prefersReducedMotion = useReducedMotion();
-  const narrow = useIsNarrow();
+  const narrow = useMediaQuery(NARROW_QUERY);
 
   // Consumed for this transition — reset so the *next* navigation defaults
   // back to forward unless goBack() sets it again.

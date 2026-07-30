@@ -11,3 +11,5 @@ npm-debug.log*
 .DS_Store
 
 server/prisma/*.db
+
+client/scripts/ne_110m_admin_0_countries.geojson
