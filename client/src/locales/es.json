@@ -7,7 +7,8 @@
     "confirmDiscard": "¿descartar los cambios sin guardar?",
     "staleRate": "el tipo de cambio podría estar desactualizado",
     "loading": "cargando…",
-    "somethingWentWrong": "algo salió mal — inténtalo de nuevo"
+    "somethingWentWrong": "algo salió mal — inténtalo de nuevo",
+    "menu": "menú"
   },
   "landing": {
     "signIn": "iniciar sesión",

@@ -46,7 +46,8 @@ export default function Explore() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t('explore.searchPlaceholder')}
-        className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+        aria-label={t('explore.searchPlaceholder')}
+        className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
       />
 
       <div className="mt-8 flex gap-8">
@@ -64,11 +65,7 @@ export default function Explore() {
                   to={`/explore/${country.cca2}`}
                   className="flex items-center gap-2 text-ink"
                 >
-                  <img
-                    src={country.flagSvgUrl}
-                    alt={country.flagAlt ?? localizedCountryName(country, i18n.language)}
-                    className="h-4 w-6"
-                  />
+                  <img src={country.flagSvgUrl} alt="" className="h-4 w-6" />
                   {localizedCountryName(country, i18n.language)}
                 </Link>
               ))}

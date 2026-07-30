@@ -161,7 +161,12 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
           <img src={country.flagSvgUrl} alt="" className="h-4 w-6" />
           {country.nameEn}
         </button>
-        <input type="checkbox" checked={country.isFeatured} onChange={onToggleFeatured} />
+        <input
+          type="checkbox"
+          checked={country.isFeatured}
+          onChange={onToggleFeatured}
+          aria-label={`${t('admin.destinations.featured')}: ${country.nameEn}`}
+        />
         <span>
           {country.imageUrl ? (
             <img src={country.imageUrl} alt="" className="h-8 w-8 rounded object-cover" />
@@ -209,7 +214,8 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
                   value={cityName}
                   onChange={(e) => setCityName(e.target.value)}
                   placeholder={t('admin.destinations.cityNamePlaceholder')}
-                  className="border-b border-hairline bg-transparent text-ink outline-none"
+                  aria-label={t('admin.destinations.cityNamePlaceholder')}
+                  className="border-b border-hairline bg-transparent text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
                 />
                 <button type="submit" className="text-ink underline">
                   {t('admin.destinations.addCity')}
@@ -239,7 +245,8 @@ function DestinationRow({ country, expanded, onToggle, onToggleFeatured, onChang
                   value={attractionName}
                   onChange={(e) => setAttractionName(e.target.value)}
                   placeholder={t('admin.destinations.attractionNamePlaceholder')}
-                  className="border-b border-hairline bg-transparent text-ink outline-none"
+                  aria-label={t('admin.destinations.attractionNamePlaceholder')}
+                  className="border-b border-hairline bg-transparent text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
                 />
                 <button type="submit" className="text-ink underline">
                   {t('admin.destinations.addAttraction')}

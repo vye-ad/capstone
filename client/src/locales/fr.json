@@ -7,7 +7,8 @@
     "confirmDiscard": "abandonner les modifications non enregistrées ?",
     "staleRate": "le taux de change est peut-être obsolète",
     "loading": "chargement…",
-    "somethingWentWrong": "une erreur est survenue — réessayez"
+    "somethingWentWrong": "une erreur est survenue — réessayez",
+    "menu": "menu"
   },
   "landing": {
     "signIn": "se connecter",

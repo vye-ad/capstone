@@ -50,9 +50,13 @@ export default function CountrySelect({ id, value, onChange, placeholder }) {
           setOpen(true);
           setQuery('');
         }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') setOpen(false);
+        }}
         placeholder={placeholder}
+        aria-label={placeholder}
         autoComplete="off"
-        className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+        className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
       />
       {open && (options.length > 0 || query.trim()) && (
         <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto border border-hairline bg-paper">

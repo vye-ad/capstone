@@ -11,8 +11,21 @@ export default function Modal({ children, onClose }) {
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40" onClick={onClose}>
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40"
+      onClick={onClose}
+    >
       <div
         onClick={(e) => e.stopPropagation()}
         className={`rounded border border-hairline bg-paper p-6 transition-all duration-200 motion-reduce:transition-none ${

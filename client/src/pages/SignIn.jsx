@@ -52,7 +52,8 @@ export default function SignIn() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t('auth.email')}
-            className="border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+            aria-label={t('auth.email')}
+            className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
           {fieldErrors.email && <p className="text-sm text-danger">{fieldErrors.email}</p>}
         </label>
@@ -62,7 +63,8 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t('auth.password')}
-            className="border-b border-hairline bg-transparent py-2 text-ink outline-none placeholder:text-muted"
+            aria-label={t('auth.password')}
+            className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
           {fieldErrors.password && <p className="text-sm text-danger">{fieldErrors.password}</p>}
         </label>

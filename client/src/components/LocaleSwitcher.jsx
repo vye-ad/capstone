@@ -4,16 +4,25 @@ import { updateProfile } from '../lib/profile.js';
 import { SUPPORTED_LOCALES } from '../lib/i18n.js';
 
 export default function LocaleSwitcher() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { setUser } = useAuth();
 
   async function handleChange(e) {
-    const data = await updateProfile({ locale: e.target.value });
-    setUser(data.user);
+    try {
+      const data = await updateProfile({ locale: e.target.value });
+      setUser(data.user);
+    } catch {
+      // language didn't actually change server-side — leave the select as-is
+    }
   }
 
   return (
-    <select value={i18n.language} onChange={handleChange} className="bg-transparent text-ink underline">
+    <select
+      value={i18n.language}
+      onChange={handleChange}
+      aria-label={t('countryDetail.language')}
+      className="bg-transparent text-ink underline"
+    >
       {SUPPORTED_LOCALES.map((l) => (
         <option key={l} value={l}>
           {l}

@@ -117,7 +117,7 @@ export default function Home() {
             <p>
               <img
                 src={nearestTrip.country.flagSvgUrl}
-                alt={localizedCountryName(nearestTrip.country, i18n.language)}
+                alt=""
                 className="inline h-4 w-6 align-middle"
               />{' '}
               {localizedCountryName(nearestTrip.country, i18n.language)} {t('home.inDays', { count: daysUntil })}{' '}

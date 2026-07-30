@@ -7,7 +7,8 @@
     "confirmDiscard": "discard unsaved changes?",
     "staleRate": "exchange rate may be outdated",
     "loading": "loading…",
-    "somethingWentWrong": "something went wrong — try again"
+    "somethingWentWrong": "something went wrong — try again",
+    "menu": "menu"
   },
   "landing": {
     "signIn": "sign in",

@@ -174,7 +174,7 @@ export default function CreateEditTrip() {
                 type="date"
                 value={form.startDate}
                 onChange={(e) => setField('startDate', e.target.value)}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {fieldErrors.startDate && <p className="text-sm text-danger">{fieldErrors.startDate}</p>}
             </label>
@@ -184,7 +184,7 @@ export default function CreateEditTrip() {
                 type="date"
                 value={form.endDate}
                 onChange={(e) => setField('endDate', e.target.value)}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {fieldErrors.endDate && <p className="text-sm text-danger">{fieldErrors.endDate}</p>}
             </label>
@@ -218,7 +218,7 @@ export default function CreateEditTrip() {
               <select
                 value={form.budgetCurrency}
                 onChange={(e) => setField('budgetCurrency', e.target.value)}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               >
                 <option value="" disabled>
                   --
@@ -235,7 +235,7 @@ export default function CreateEditTrip() {
                 step="0.01"
                 value={form.budgetAmount}
                 onChange={(e) => setField('budgetAmount', e.target.value)}
-                className="flex-1 border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="flex-1 border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
             </div>
             {fieldErrors.budgetAmount && <p className="text-sm text-danger">{fieldErrors.budgetAmount}</p>}
@@ -251,7 +251,7 @@ export default function CreateEditTrip() {
             <select
               value={form.transportType}
               onChange={(e) => setField('transportType', e.target.value)}
-              className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+              className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
             >
               <option value="">{t('createTrip.transportType')}</option>
               {TRANSPORT_TYPES.map((tt) => (
@@ -270,7 +270,7 @@ export default function CreateEditTrip() {
             <select
               value={form.accommodationType}
               onChange={(e) => setField('accommodationType', e.target.value)}
-              className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+              className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
             >
               <option value="">{t('createTrip.accommodationType')}</option>
               {ACCOMMODATION_TYPES.map((at) => (
@@ -291,7 +291,7 @@ export default function CreateEditTrip() {
               onChange={(e) => setField('notes', e.target.value)}
               maxLength={2000}
               rows={4}
-              className="border border-hairline bg-transparent p-2 text-ink outline-none"
+              className="border border-hairline bg-transparent p-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
             />
             {fieldErrors.notes && <p className="text-sm text-danger">{fieldErrors.notes}</p>}
           </label>

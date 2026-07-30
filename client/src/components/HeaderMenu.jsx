@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // §13: collapse the locale/currency switcher and sign out into a menu below
 // sm (640px) — the header's utility controls don't fit a narrow viewport
 // inline the way they do in the desktop mockups.
 export default function HeaderMenu({ children }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,7 +15,8 @@ export default function HeaderMenu({ children }) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="text-ink sm:hidden"
-        aria-label="menu"
+        aria-label={t('common.menu')}
+        aria-expanded={open}
       >
         ☰
       </button>

@@ -86,6 +86,7 @@ export default function UsersTab() {
                     value={u.role}
                     disabled={isSelf}
                     onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                    aria-label={`${t('admin.users.role')}: ${u.name}`}
                     className="bg-transparent disabled:opacity-50"
                   >
                     <option value="USER">USER</option>

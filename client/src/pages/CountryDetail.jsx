@@ -62,7 +62,7 @@ export default function CountryDetail() {
       <PageHeader page={t('pages.explore')} />
 
       <div className="flex items-center gap-2 text-ink">
-        <img src={country.flagSvgUrl} alt={country.flagAlt ?? localizedCountryName(country, i18n.language)} className="h-4 w-6" />
+        <img src={country.flagSvgUrl} alt="" className="h-4 w-6" />
         <span>{localizedCountryName(country, i18n.language)}</span>
       </div>
 

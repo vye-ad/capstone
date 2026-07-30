@@ -217,7 +217,7 @@ export default function Profile() {
                 type="text"
                 value={editForm.name}
                 onChange={(e) => setEditForm((f) => ({ ...f, name: e.target.value }))}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {fieldErrors.name && <p className="text-sm text-danger">{fieldErrors.name}</p>}
             </label>
@@ -227,7 +227,7 @@ export default function Profile() {
                 type="email"
                 value={editForm.email}
                 onChange={(e) => setEditForm((f) => ({ ...f, email: e.target.value }))}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {fieldErrors.email && <p className="text-sm text-danger">{fieldErrors.email}</p>}
             </label>
@@ -300,7 +300,7 @@ export default function Profile() {
                 onChange={(e) =>
                   setPasswordForm((f) => ({ ...f, currentPassword: e.target.value }))
                 }
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {passwordFieldErrors.currentPassword && (
                 <p className="text-sm text-danger">{passwordFieldErrors.currentPassword}</p>
@@ -312,7 +312,7 @@ export default function Profile() {
                 type="password"
                 value={passwordForm.newPassword}
                 onChange={(e) => setPasswordForm((f) => ({ ...f, newPassword: e.target.value }))}
-                className="border-b border-hairline bg-transparent py-2 text-ink outline-none"
+                className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {passwordFieldErrors.newPassword && (
                 <p className="text-sm text-danger">{passwordFieldErrors.newPassword}</p>

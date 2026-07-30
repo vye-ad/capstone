@@ -38,7 +38,7 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
   );
   const flagAndName = (
     <span className="flex items-center gap-2 text-ink">
-      <img src={trip.country.flagSvgUrl} alt={countryName} className="h-4 w-6" />
+      <img src={trip.country.flagSvgUrl} alt="" className="h-4 w-6" />
       {countryName}
     </span>
   );
