@@ -128,7 +128,7 @@ export default function CountryDetail() {
         <div className="mt-8 flex justify-center">
           <GlobeView
             mode="country"
-            size={220}
+            size={280}
             country={{
               cca3: country.cca3,
               nameEn: country.nameEn,

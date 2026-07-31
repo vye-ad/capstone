@@ -7,6 +7,14 @@ import LocaleCurrencySwitcher from '../components/LocaleCurrencySwitcher.jsx';
 import HeaderMenu from '../components/HeaderMenu.jsx';
 import GlobeView from '../components/GlobeView.jsx';
 import { localizedCountryName } from '../lib/countryName.js';
+import { useMediaQuery } from '../lib/useMediaQuery.js';
+
+// Matches the lg breakpoint the surrounding layout switches on. The compass
+// layout below has two CSS-only blocks (mobile stack / desktop grid) so
+// only one is ever visible, but a plain CSS-hidden block still mounts its
+// React tree — for a WebGL globe that meant two live contexts at once. This
+// picks a single globe instance to actually render.
+const DESKTOP_QUERY = '(min-width: 1024px)';
 
 function todayUTC() {
   const now = new Date();
@@ -20,6 +28,7 @@ function wholeDaysBetween(a, b) {
 export default function Home() {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
+  const isDesktop = useMediaQuery(DESKTOP_QUERY);
   // undefined = still loading, null = confirmed no upcoming trips
   const [nearestTrip, setNearestTrip] = useState(undefined);
 
@@ -66,7 +75,7 @@ export default function Home() {
       {/* §13: the compass layout doesn't fit narrow screens — stack the
           links vertically below lg instead of scaling the desktop layout. */}
       <div className="flex flex-1 flex-col items-center justify-center gap-6 lg:hidden">
-        <GlobeView mode="rotate" size={96} />
+        {!isDesktop && <GlobeView mode="rotate" size={160} />}
         <Link to="/profile" className="text-ink underline">
           {t('home.nav.profile')}
         </Link>
@@ -91,7 +100,7 @@ export default function Home() {
           <Link to="/explore" className="text-ink underline">
             {t('home.nav.explore')}
           </Link>
-          <GlobeView mode="rotate" size={96} />
+          {isDesktop && <GlobeView mode="rotate" size={160} />}
           <Link to="/trips" className="text-ink underline">
             {t('home.nav.myTrips')}
           </Link>

@@ -1,6 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
+import * as THREE from 'three';
 import { loadCountryFeatures, findCountryFeature } from '../lib/countryTopology.js';
+
+// globe.gl's default lighting is tuned for photographic textures. Against
+// this texture's near-black ocean, the default intensity left land and
+// ocean almost indistinguishable — confirmed by looking at it, not just
+// reading the numbers — so this brightens things enough to read the
+// continents clearly while staying within the dark, low-contrast palette
+// §14 asks for (nothing here approaches a lit "daytime" look).
+function useGlobeLights() {
+  return useMemo(
+    () => [new THREE.AmbientLight(0xffffff, 2.2), new THREE.DirectionalLight(0xffffff, 0.6)],
+    []
+  );
+}
 
 const INK = '#111111';
 // Reuses the existing status.ongoing design token — plain ink-on-ink against
@@ -47,6 +61,7 @@ export default function Globe3D({ mode, country, size }) {
   const globeRef = useRef();
   const containerRef = useRef();
   const [features, setFeatures] = useState(null);
+  const lights = useGlobeLights();
 
   useVisibilityPause(globeRef, containerRef);
 
@@ -80,6 +95,7 @@ export default function Globe3D({ mode, country, size }) {
         height={size}
         backgroundColor={TRANSPARENT}
         globeImageUrl="/textures/earth-dark.jpg"
+        lights={lights}
         showAtmosphere={mode === 'rotate'}
         atmosphereColor={INK}
         atmosphereAltitude={0.15}

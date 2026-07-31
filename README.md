@@ -106,6 +106,15 @@ curl -sL https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/g
 node scripts/build-country-topology.mjs
 ```
 
+`client/public/textures/earth-dark.jpg` is a contrast-adjusted version of
+`three-globe`'s example texture of the same name (see Attribution) — the
+original is too low-contrast to read as a recognizable Earth at the sizes
+this app renders it at. To regenerate from a fresh copy of the source:
+
+```bash
+python3 scripts/adjust-texture-contrast.py <path-to-original> public/textures/earth-dark.jpg
+```
+
 ## Testing
 
 Backend: Jest + Supertest, run against a real Postgres database (not
@@ -226,7 +235,7 @@ field.
 | `motion` (Framer Motion) | Page transitions | https://motion.dev |
 | `react-globe.gl` / `globe.gl` / `three-globe` | 3D globe (§14) | https://github.com/vasturiano/react-globe.gl |
 | Natural Earth (public domain) | Country border data for the globe's highlight layer | https://www.naturalearthdata.com |
-| Earth texture from the `three-globe` example gallery (MIT) | Dark globe texture, reused as the static PNG fallback too | https://github.com/vasturiano/three-globe |
+| Earth texture from the `three-globe` example gallery (MIT), levels-adjusted | Dark globe texture, reused as the static PNG fallback too | https://github.com/vasturiano/three-globe |
 | `topojson-client` / `topojson-server` / `topojson-simplify` | Converts the Natural Earth GeoJSON to a compact TopoJSON at build time, then back to GeoJSON at runtime | https://github.com/topojson |
 
 Updated as each dependency is actually introduced.
