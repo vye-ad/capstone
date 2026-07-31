@@ -1100,6 +1100,16 @@ Landing and auth pages are cold-load, unauthenticated, first-impression screens 
 ### Implementation
 
 - **Spinning:** set `globeImageUrl` to a 2K texture and enable auto-rotate on the controls. A dark, low-contrast Earth suits the monochrome design better than a photographic one.
+
+  > **[DEVIATION]** Shipped with a full-colour ("blue marble" style)
+  > texture instead — an explicit request, not an oversight. The first
+  > implementation followed this section literally (a levels-adjusted dark
+  > monochrome texture), but at the sizes this app actually renders the
+  > globe at, "dark, low-contrast" read as an almost-solid black circle
+  > rather than a recognizable planet, even after a contrast pass. Asked
+  > directly, the choice was to trade the monochrome rule for legibility
+  > here rather than push contrast further. This is the one place in the
+  > app where colour appears outside status dots / error states.
 - **Border highlight:** pass GeoJSON country features to `polygonsData`; `polygonCapColor` and `polygonSideColor` take functions receiving each feature, so return the highlight colour for the matched country and a transparent/neutral colour for the rest. `polygonAltitude` raises the shape so edges read clearly.
 - **Camera:** `pointOfView({ lat, lng, altitude })` animates to the country, using `Country.latitude` / `Country.longitude` already in the schema.
 

@@ -106,14 +106,12 @@ curl -sL https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/g
 node scripts/build-country-topology.mjs
 ```
 
-`client/public/textures/earth-dark.jpg` is a contrast-adjusted version of
-`three-globe`'s example texture of the same name (see Attribution) — the
-original is too low-contrast to read as a recognizable Earth at the sizes
-this app renders it at. To regenerate from a fresh copy of the source:
-
-```bash
-python3 scripts/adjust-texture-contrast.py <path-to-original> public/textures/earth-dark.jpg
-```
+`client/public/textures/earth.jpg` is `three-globe`'s `earth-day.jpg`
+example texture (see Attribution), used as-is — a deliberate
+[DEVIATION] from §14's monochrome globe (see DEVELOPMENT.md §14). An
+earlier version used a levels-adjusted dark monochrome texture instead;
+`scripts/adjust-texture-contrast.py` still does that adjustment if this
+gets reverted to the monochrome version later.
 
 ## Testing
 
@@ -235,7 +233,7 @@ field.
 | `motion` (Framer Motion) | Page transitions | https://motion.dev |
 | `react-globe.gl` / `globe.gl` / `three-globe` | 3D globe (§14) | https://github.com/vasturiano/react-globe.gl |
 | Natural Earth (public domain) | Country border data for the globe's highlight layer | https://www.naturalearthdata.com |
-| Earth texture from the `three-globe` example gallery (MIT), levels-adjusted | Dark globe texture, reused as the static PNG fallback too | https://github.com/vasturiano/three-globe |
+| `earth-day.jpg` from the `three-globe` example gallery (MIT) | Colour globe texture — [DEVIATION] from §14's monochrome spec, reused as the static PNG fallback too | https://github.com/vasturiano/three-globe |
 | `topojson-client` / `topojson-server` / `topojson-simplify` | Converts the Natural Earth GeoJSON to a compact TopoJSON at build time, then back to GeoJSON at runtime | https://github.com/topojson |
 
 Updated as each dependency is actually introduced.

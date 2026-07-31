@@ -1,27 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
-import * as THREE from 'three';
 import { loadCountryFeatures, findCountryFeature } from '../lib/countryTopology.js';
 
-// globe.gl's default lighting is tuned for photographic textures. Against
-// this texture's near-black ocean, the default intensity left land and
-// ocean almost indistinguishable — confirmed by looking at it, not just
-// reading the numbers — so this brightens things enough to read the
-// continents clearly while staying within the dark, low-contrast palette
-// §14 asks for (nothing here approaches a lit "daytime" look).
-function useGlobeLights() {
-  return useMemo(
-    () => [new THREE.AmbientLight(0xffffff, 2.2), new THREE.DirectionalLight(0xffffff, 0.6)],
-    []
-  );
-}
-
-const INK = '#111111';
-// Reuses the existing status.ongoing design token — plain ink-on-ink against
-// the dark globe texture would make the highlight effectively invisible,
-// and this app's colour palette already treats this blue as "the thing
-// that's currently active/relevant", which fits a highlighted country.
-const HIGHLIGHT = '#2F6FED';
+// [DEVIATION from §14] Photographic full-colour Earth, not the spec's dark
+// monochrome one — an explicit, requested exception to the app's monochrome
+// design; see DEVELOPMENT.md §14's deviation note. globe.gl's default
+// lighting is tuned for exactly this kind of texture, so no custom `lights`
+// override is needed here (unlike the dark texture this replaced, which
+// needed one to be legible at all).
+const ATMOSPHERE = '#87ceeb';
+// Bright, saturated gold reads clearly against both the ocean blue and the
+// land greens/tans in this texture — a subtler colour (e.g. the app's
+// status.ongoing blue) would blend into the ocean.
+const HIGHLIGHT = '#FFD700';
 const TRANSPARENT = 'rgba(0,0,0,0)';
 
 // §14: "pause the render loop when not visible" — a continuously rendering
@@ -61,7 +52,6 @@ export default function Globe3D({ mode, country, size }) {
   const globeRef = useRef();
   const containerRef = useRef();
   const [features, setFeatures] = useState(null);
-  const lights = useGlobeLights();
 
   useVisibilityPause(globeRef, containerRef);
 
@@ -94,10 +84,9 @@ export default function Globe3D({ mode, country, size }) {
         width={size}
         height={size}
         backgroundColor={TRANSPARENT}
-        globeImageUrl="/textures/earth-dark.jpg"
-        lights={lights}
+        globeImageUrl="/textures/earth.jpg"
         showAtmosphere={mode === 'rotate'}
-        atmosphereColor={INK}
+        atmosphereColor={ATMOSPHERE}
         atmosphereAltitude={0.15}
         polygonsData={mode === 'country' ? features ?? [] : []}
         polygonCapColor={(f) => (f === highlighted ? HIGHLIGHT : TRANSPARENT)}
