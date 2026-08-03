@@ -67,8 +67,11 @@ export default function CountryDetail() {
         <span>{localizedCountryName(country, i18n.language)}</span>
       </div>
 
+      {/* picture / info / globe — the third (globe) column is §14's
+          progressive enhancement; falls back to the static globe (narrow
+          viewport / reduced motion / no WebGL / no coordinates). */}
       <div className="mt-6 flex flex-col gap-8 lg:flex-row">
-        <div className="lg:w-1/3">
+        <div className="lg:w-48">
           <img
             src={country.imageUrl}
             alt={localizedCountryName(country, i18n.language)}
@@ -76,22 +79,24 @@ export default function CountryDetail() {
           />
         </div>
 
-        <div className="flex-1">
-          <p className="text-ink">
-            {t('countryDetail.language')}: {languages}
-          </p>
-          <p className="text-ink">
-            {t('countryDetail.currency')}: {country.currencyName} ({country.currencySymbol})
-            {rateFormatted !== null && (
-              <>
-                {' '}
-                — 1 {country.currencyCode} = {rateFormatted} {user.currency}
-                {isStale && <span className="text-muted"> ({t('common.staleRate')})</span>}
-              </>
-            )}
-          </p>
+        <div className="flex-1 text-lg">
+          <div className="flex flex-col gap-3">
+            <p className="text-ink">
+              {t('countryDetail.language')}: {languages}
+            </p>
+            <p className="text-ink">
+              {t('countryDetail.currency')}: {country.currencyName} ({country.currencySymbol})
+              {rateFormatted !== null && (
+                <>
+                  {' '}
+                  — 1 {country.currencyCode} = {rateFormatted} {user.currency}
+                  {isStale && <span className="text-muted"> ({t('common.staleRate')})</span>}
+                </>
+              )}
+            </p>
+          </div>
 
-          <div className="mt-6 flex gap-8">
+          <div className="mt-10 flex gap-16">
             {hasCities && (
               <div>
                 <h3 className="text-heading font-medium text-ink">{t('countryDetail.mainCities')}</h3>
@@ -118,26 +123,22 @@ export default function CountryDetail() {
             )}
           </div>
         </div>
-      </div>
 
-      {/* §14: 3D globe, progressive enhancement — rotates to the country and
-          highlights its border. Falls back to the static globe (narrow
-          viewport / reduced motion / no WebGL); removing this block entirely
-          changes nothing else on the page. */}
-      {country.latitude != null && country.longitude != null && (
-        <div className="mt-8 flex justify-center">
-          <GlobeView
-            mode="country"
-            size={280}
-            country={{
-              cca3: country.cca3,
-              nameEn: country.nameEn,
-              latitude: country.latitude,
-              longitude: country.longitude,
-            }}
-          />
-        </div>
-      )}
+        {country.latitude != null && country.longitude != null && (
+          <div className="flex items-center justify-center lg:w-80">
+            <GlobeView
+              mode="country"
+              size={280}
+              country={{
+                cca3: country.cca3,
+                nameEn: country.nameEn,
+                latitude: country.latitude,
+                longitude: country.longitude,
+              }}
+            />
+          </div>
+        )}
+      </div>
 
       <div className="mt-8 flex justify-center">
         <Link to={`/trips/new?country=${country.cca2}`} className="text-ink underline">
