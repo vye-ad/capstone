@@ -7,7 +7,7 @@ export default function LocaleCurrencySwitcher() {
   return (
     <div className="flex items-center gap-2">
       <LocaleSwitcher />
-      <span className="text-muted">|</span>
+      <span className="text-utility text-muted">|</span>
       <CurrencySwitcher />
     </div>
   );

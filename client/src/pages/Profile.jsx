@@ -178,10 +178,10 @@ export default function Profile() {
               {t('profile.removePicture')}
             </button>
           )}
-          {avatarError && <p className="text-sm text-danger">{avatarError}</p>}
+          {avatarError && <p className="text-utility text-danger">{avatarError}</p>}
 
           <div className="mt-6">
-            <h2 className="text-ink">{t('profile.travelStatistics')}</h2>
+            <h2 className="text-heading font-medium text-ink">{t('profile.travelStatistics')}</h2>
             {stats && (
               <dl className="mt-2 flex flex-col gap-1 text-muted">
                 <div className="flex justify-between gap-4">
@@ -219,7 +219,7 @@ export default function Profile() {
                 onChange={(e) => setEditForm((f) => ({ ...f, name: e.target.value }))}
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
-              {fieldErrors.name && <p className="text-sm text-danger">{fieldErrors.name}</p>}
+              {fieldErrors.name && <p className="text-utility text-danger">{fieldErrors.name}</p>}
             </label>
             <label className="flex flex-col gap-1">
               <span className="text-muted">{t('profile.email')}</span>
@@ -229,7 +229,7 @@ export default function Profile() {
                 onChange={(e) => setEditForm((f) => ({ ...f, email: e.target.value }))}
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
-              {fieldErrors.email && <p className="text-sm text-danger">{fieldErrors.email}</p>}
+              {fieldErrors.email && <p className="text-utility text-danger">{fieldErrors.email}</p>}
             </label>
             <label className="flex flex-col gap-1">
               <span className="text-muted">{t('profile.country')}</span>
@@ -238,7 +238,7 @@ export default function Profile() {
                 value={editForm.countryCode}
                 onChange={(v) => setEditForm((f) => ({ ...f, countryCode: v }))}
               />
-              {fieldErrors.countryCode && <p className="text-sm text-danger">{fieldErrors.countryCode}</p>}
+              {fieldErrors.countryCode && <p className="text-utility text-danger">{fieldErrors.countryCode}</p>}
             </label>
             {profileFormError && <p className="text-danger">{profileFormError}</p>}
             <div className="mt-2 flex gap-6">
@@ -303,7 +303,7 @@ export default function Profile() {
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {passwordFieldErrors.currentPassword && (
-                <p className="text-sm text-danger">{passwordFieldErrors.currentPassword}</p>
+                <p className="text-utility text-danger">{passwordFieldErrors.currentPassword}</p>
               )}
             </label>
             <label className="flex flex-col gap-1">
@@ -315,7 +315,7 @@ export default function Profile() {
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
               {passwordFieldErrors.newPassword && (
-                <p className="text-sm text-danger">{passwordFieldErrors.newPassword}</p>
+                <p className="text-utility text-danger">{passwordFieldErrors.newPassword}</p>
               )}
             </label>
             {passwordFormError && <p className="text-danger">{passwordFormError}</p>}

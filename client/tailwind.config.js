@@ -21,6 +21,14 @@ export default {
       fontFamily: {
         sans: ['"Work Sans"', 'sans-serif'],
       },
+      // DEVELOPMENT.md's Typography table (§ "Typography"): one scale, four
+      // named roles, used everywhere instead of Tailwind's default sizes.
+      fontSize: {
+        wordmark: ['32px', { lineHeight: '1.2' }],
+        heading: ['22px', { lineHeight: '1.3' }],
+        body: ['17px', { lineHeight: '1.5' }],
+        utility: ['15px', { lineHeight: '1.4' }],
+      },
     },
   },
   plugins: [],

@@ -11,16 +11,16 @@ export default function PageHeader({ page }) {
 
   return (
     <div className="flex items-center justify-between py-4">
-      <button type="button" onClick={goBack} className="text-ink underline">
+      <button type="button" onClick={goBack} className="text-utility text-ink underline">
         {'< '}
         {t('common.back')}
       </button>
-      <div className="text-ink">
+      <div className="text-utility text-ink">
         {t('common.wordmark')} | {page}
       </div>
       <HeaderMenu>
         <LocaleCurrencySwitcher />
-        <button type="button" onClick={logout} className="text-ink underline">
+        <button type="button" onClick={logout} className="text-utility text-ink underline">
           {t('common.signOut')}
         </button>
       </HeaderMenu>

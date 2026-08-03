@@ -14,14 +14,14 @@ export default function HeaderMenu({ children }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="text-ink sm:hidden"
+        className="text-utility text-ink sm:hidden"
         aria-label={t('common.menu')}
         aria-expanded={open}
       >
         ☰
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-10 mt-2 flex flex-col gap-3 border border-hairline bg-paper p-4 sm:hidden">
+        <div className="absolute right-0 top-full z-10 mt-2 flex flex-col gap-3 border border-hairline bg-paper p-4 text-utility sm:hidden">
           {children}
         </div>
       )}

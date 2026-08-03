@@ -21,7 +21,7 @@ export default function LocaleSwitcher() {
       value={i18n.language}
       onChange={handleChange}
       aria-label={t('countryDetail.language')}
-      className="bg-transparent text-ink underline"
+      className="bg-transparent text-utility text-ink underline"
     >
       {SUPPORTED_LOCALES.map((l) => (
         <option key={l} value={l}>

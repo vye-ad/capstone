@@ -58,15 +58,15 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col px-4 py-6">
       <div className="flex items-center justify-between">
-        <div className="text-[32px] text-ink">xpdtr</div>
+        <div className="text-wordmark text-ink">xpdtr</div>
         <HeaderMenu>
           {user.role === 'ADMIN' && (
-            <Link to="/admin" className="text-ink underline">
+            <Link to="/admin" className="text-utility text-ink underline">
               {t('pages.admin')}
             </Link>
           )}
           <LocaleCurrencySwitcher />
-          <button type="button" onClick={logout} className="text-ink underline">
+          <button type="button" onClick={logout} className="text-utility text-ink underline">
             {t('common.signOut')}
           </button>
         </HeaderMenu>

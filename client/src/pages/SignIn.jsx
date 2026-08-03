@@ -43,7 +43,7 @@ export default function SignIn() {
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-8 px-4 py-8">
-      <div className="w-full text-left text-[32px] text-ink">xpdtr</div>
+      <div className="w-full text-left text-wordmark text-ink">xpdtr</div>
       <StaticGlobe />
       <form onSubmit={handleSubmit} className="flex w-full max-w-xs flex-col gap-6">
         <label className="flex flex-col gap-1">
@@ -55,7 +55,7 @@ export default function SignIn() {
             aria-label={t('auth.email')}
             className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
-          {fieldErrors.email && <p className="text-sm text-danger">{fieldErrors.email}</p>}
+          {fieldErrors.email && <p className="text-utility text-danger">{fieldErrors.email}</p>}
         </label>
         <label className="flex flex-col gap-1">
           <input
@@ -66,7 +66,7 @@ export default function SignIn() {
             aria-label={t('auth.password')}
             className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
-          {fieldErrors.password && <p className="text-sm text-danger">{fieldErrors.password}</p>}
+          {fieldErrors.password && <p className="text-utility text-danger">{fieldErrors.password}</p>}
         </label>
         {formError && <p className="text-danger">{formError}</p>}
         <button

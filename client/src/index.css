@@ -9,4 +9,8 @@ body {
   margin: 0;
   background-color: theme('colors.paper');
   color: theme('colors.ink');
+  /* DEVELOPMENT.md's Typography table: "Body / labels" and "Values /
+     secondary" are both 17px — the vast majority of text in the app has no
+     explicit size class, so this is what actually sets it site-wide. */
+  font-size: 17px;
 }
