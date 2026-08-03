@@ -57,8 +57,10 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col px-4 py-6">
-      <div className="flex items-center justify-between">
-        <div className="text-wordmark text-ink">xpdtr</div>
+      <div className="flex items-center justify-between py-2">
+        <Link to="/home" className="text-wordmark text-ink">
+          xpdtr
+        </Link>
         <HeaderMenu>
           {user.role === 'ADMIN' && (
             <Link to="/admin" className="text-utility text-ink underline">
@@ -75,7 +77,7 @@ export default function Home() {
       {/* §13: the compass layout doesn't fit narrow screens — stack the
           links vertically below lg instead of scaling the desktop layout. */}
       <div className="flex flex-1 flex-col items-center justify-center gap-6 lg:hidden">
-        {!isDesktop && <GlobeView mode="rotate" size={160} />}
+        {!isDesktop && <GlobeView mode="rotate" size={280} />}
         <Link to="/profile" className="text-ink underline">
           {t('home.nav.profile')}
         </Link>
@@ -100,7 +102,7 @@ export default function Home() {
           <Link to="/explore" className="text-ink underline">
             {t('home.nav.explore')}
           </Link>
-          {isDesktop && <GlobeView mode="rotate" size={160} />}
+          {isDesktop && <GlobeView mode="rotate" size={280} />}
           <Link to="/trips" className="text-ink underline">
             {t('home.nav.myTrips')}
           </Link>

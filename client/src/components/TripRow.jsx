@@ -59,7 +59,16 @@ export default function TripRow({ trip, expanded, onToggle, onDeleteClick }) {
   );
 
   return (
-    <div className="rounded-pill border border-hairline px-4 py-3">
+    <div
+      className={`border border-hairline px-4 py-3 ${
+        // `rounded-pill` (border-radius: 9999px) clamps to half the box's
+        // shorter side — fine for the short collapsed row, but once expanded
+        // content makes the row much taller than it is wide, that clamp
+        // produces a stadium shape whose curved caps cut into the corner
+        // content. A fixed radius doesn't have that problem at any height.
+        expanded ? 'rounded-3xl' : 'rounded-pill'
+      }`}
+    >
       {/* §13: a five-column table doesn't survive a narrow viewport — this
           is a genuinely different card layout below lg, not a scaled table. */}
       <div className="flex flex-col gap-2 lg:hidden">

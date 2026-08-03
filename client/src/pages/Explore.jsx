@@ -50,7 +50,7 @@ export default function Explore() {
         className="w-full border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
       />
 
-      <div className="mt-8 flex gap-8">
+      <div className="mt-8 flex gap-8 lg:min-h-[28rem]">
         <div className="flex-1">
           {!showingSearch && (
             <h2 className="mb-4 text-heading font-medium text-ink">{t('explore.featuredDestinations')}</h2>
@@ -74,8 +74,8 @@ export default function Explore() {
             </div>
           )}
         </div>
-        <div className="hidden lg:block">
-          <StaticGlobe />
+        <div className="hidden flex-1 lg:flex lg:items-center lg:justify-center">
+          <StaticGlobe size={320} />
         </div>
       </div>
     </main>
