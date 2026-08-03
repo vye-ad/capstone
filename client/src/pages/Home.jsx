@@ -56,7 +56,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col px-4 py-6">
+    <main className="flex h-screen flex-col overflow-hidden px-4 py-6">
       <div className="flex items-center justify-between py-2">
         <Link to="/home" className="text-wordmark text-ink">
           xpdtr
@@ -76,7 +76,7 @@ export default function Home() {
 
       {/* §13: the compass layout doesn't fit narrow screens — stack the
           links vertically below lg instead of scaling the desktop layout. */}
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 lg:hidden">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 lg:hidden">
         {!isDesktop && <GlobeView mode="rotate" size={280} />}
         <Link to="/profile" className="text-ink underline">
           {t('home.nav.profile')}
@@ -92,8 +92,8 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="hidden flex-1 items-center justify-center lg:flex">
-        <div className="grid grid-cols-3 grid-rows-3 items-center justify-items-center gap-6">
+      <div className="hidden min-h-0 flex-1 items-center justify-center lg:flex">
+        <div className="grid grid-cols-3 grid-rows-3 items-center justify-items-center gap-4">
           <div />
           <Link to="/profile" className="text-ink underline">
             {t('home.nav.profile')}
