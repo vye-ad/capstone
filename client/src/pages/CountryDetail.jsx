@@ -71,7 +71,7 @@ export default function CountryDetail() {
           progressive enhancement; falls back to the static globe (narrow
           viewport / reduced motion / no WebGL / no coordinates). */}
       <div className="mt-6 flex flex-col gap-8 lg:flex-row">
-        <div className="lg:w-48">
+        <div className="lg:w-72">
           <img
             src={country.imageUrl}
             alt={localizedCountryName(country, i18n.language)}
