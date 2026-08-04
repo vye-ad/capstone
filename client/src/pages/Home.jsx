@@ -77,6 +77,9 @@ export default function Home() {
       {/* §13: the compass layout doesn't fit narrow screens — stack the
           links vertically below lg instead of scaling the desktop layout. */}
       <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 lg:hidden">
+        {/* Bigger-globe request was desktop-only (below); a 420px globe on
+            a narrow stacked layout overflows the viewport and overlaps the
+            profile link right after it, so this one stays at 280. */}
         {!isDesktop && <GlobeView mode="rotate" size={280} />}
         <Link to="/profile" className="text-ink underline">
           {t('home.nav.profile')}
@@ -102,7 +105,18 @@ export default function Home() {
           <Link to="/explore" className="text-ink underline">
             {t('home.nav.explore')}
           </Link>
-          {isDesktop && <GlobeView mode="rotate" size={280} />}
+          {isDesktop && (
+            // A fixed 280x280 footprint keeps this grid cell's row/column
+            // sizing unchanged (profile/+ share this column, explore/my
+            // trips share this row); the actual (bigger) globe is an
+            // absolutely-positioned overlay centered on that footprint, so
+            // growing it doesn't push any of those other cells.
+            <div className="relative" style={{ width: 280, height: 280 }}>
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <GlobeView mode="rotate" size={420} />
+              </div>
+            </div>
+          )}
           <Link to="/trips" className="text-ink underline">
             {t('home.nav.myTrips')}
           </Link>
