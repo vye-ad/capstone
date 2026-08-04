@@ -456,7 +456,10 @@ Login failure returns `401 { error: "invalid_credentials" }` — **the same mess
   "completedTrips": 5,
   "ongoingTrips": 1,
   "upcomingTrips": 2,
-  "countriesVisited": 6
+  "countriesVisited": 6,
+  "regionsVisited": 3,
+  "transportTypesUsed": 2,
+  "longestTripDays": 12
 }
 ```
 
@@ -464,6 +467,7 @@ Login failure returns `401 { error: "invalid_credentials" }` — **the same mess
 - `completed + ongoing + upcoming` always equals `totalTrips`, since deletion is permanent and the three statuses are exhaustive.
 - Compute with a **single SQL aggregate query** (`COUNT` + `FILTER`/`CASE`), not by loading all trips into Node and counting in JavaScript.
 - Manual status overrides must be honoured — route through the resolver in §7.
+- `regionsVisited`, `transportTypesUsed`, `longestTripDays` power the §10.9 achievements column only — they are **not** one of Profile's five visible "travel statistics" rows. Same aggregate query, same `COMPLETED`/`ONGOING` scoping as `countriesVisited`.
 
 ### Trips
 
@@ -842,6 +846,10 @@ then `edit profile` and `change password`.
 `[DEVIATION]` **`notifications` is cut.** Do not build it.
 
 `edit profile` toggles the centre fields into editable inputs with save/cancel.
+
+**Right column — achievements** (not in the original mockup, added later at developer request to fill the empty space beside a two-column layout on wide viewports): a grid of pill badges, one per entry in `client/src/lib/achievements.js`, each purely a threshold check against the `stats` response above (no separate persisted "unlocked" state, so it can never drift out of sync with the trips it's derived from). 26 badges across trip count, completed-trip count, countries visited, continents (`Country.region`) visited, longest trip length, and transport-type variety.
+
+Rendered as **text only, no icon art** — `§5`'s design constraints explicitly forbid icon libraries beyond a chevron/avatar, and a typical achievements UI leans on icon art per badge. Earned badges: `ink` text, `ink` border, and the same green dot trip rows use for `upcoming` status (reusing the existing status-dot colour rather than introducing a new one). Locked badges: `muted` text, `hairline` border, `hairline` dot. Names and descriptions are full translation keys under `profile.achievements.*` in all three locales, same as everything else on this page.
 
 Avatar upload: accept `image/jpeg`, `image/png`, `image/webp`, max 5MB, validated **server-side** as well as client-side. Uploaded to Cloudinary; store both `avatarUrl` and `avatarPublicId` so the old image can be destroyed on replacement.
 
