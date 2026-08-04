@@ -113,7 +113,7 @@ export default function Home() {
             // growing it doesn't push any of those other cells.
             <div className="relative" style={{ width: 280, height: 280 }}>
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                <GlobeView mode="rotate" size={420} />
+                <GlobeView mode="rotate" size={483} />
               </div>
             </div>
           )}
