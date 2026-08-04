@@ -6,11 +6,6 @@ A personal trip planner. Browse country destinations, then create, track,
 edit, and delete your own trips — bilingual-plus (English, French, Spanish)
 and multi-currency. Built as a solo, 4-week capstone project.
 
-> **Status:** in progress (Week 4 — polish). All graded must-haves (Weeks
-> 1-3) are complete, deployed, and verified live. Remaining: page
-> transitions, an optional 3D globe, and automated tests if time allows —
-> see `DEVELOPMENT.md` §15 for the full checklist.
-
 ## Screenshots
 
 | | |
