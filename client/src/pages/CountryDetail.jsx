@@ -125,7 +125,7 @@ export default function CountryDetail() {
         </div>
 
         {country.latitude != null && country.longitude != null && (
-          <div className="flex items-center justify-center lg:w-80">
+          <div className="flex items-center justify-center">
             <GlobeView
               mode="country"
               size={280}
