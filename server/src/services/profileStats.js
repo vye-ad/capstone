@@ -14,18 +14,29 @@ export async function getProfileStats(userId) {
       COUNT(*) FILTER (WHERE resolved_status = 'COMPLETED')::int AS "completedTrips",
       COUNT(*) FILTER (WHERE resolved_status = 'ONGOING')::int AS "ongoingTrips",
       COUNT(*) FILTER (WHERE resolved_status = 'UPCOMING')::int AS "upcomingTrips",
-      COUNT(DISTINCT CASE WHEN resolved_status IN ('COMPLETED', 'ONGOING') THEN "countryCode" END)::int AS "countriesVisited"
+      COUNT(DISTINCT CASE WHEN resolved_status IN ('COMPLETED', 'ONGOING') THEN "countryCode" END)::int AS "countriesVisited",
+      -- Achievements-only fields below (§ achievements) — not shown as their
+      -- own "travel statistics" row, DEVELOPMENT.md's Profile section is
+      -- specific that there are five stats.
+      COUNT(DISTINCT CASE WHEN resolved_status IN ('COMPLETED', 'ONGOING') THEN region END)::int AS "regionsVisited",
+      COUNT(DISTINCT CASE WHEN resolved_status IN ('COMPLETED', 'ONGOING') THEN "transportType" END)::int AS "transportTypesUsed",
+      MAX(CASE WHEN resolved_status IN ('COMPLETED', 'ONGOING') THEN ("endDate" - "startDate" + 1) END)::int AS "longestTripDays"
     FROM (
       SELECT
-        "countryCode",
+        t."countryCode",
+        t."transportType",
+        t."startDate",
+        t."endDate",
+        c.region,
         CASE
-          WHEN "statusIsManual" THEN status::text
-          WHEN ${today}::date < "startDate" THEN 'UPCOMING'
-          WHEN ${today}::date > "endDate" THEN 'COMPLETED'
+          WHEN t."statusIsManual" THEN t.status::text
+          WHEN ${today}::date < t."startDate" THEN 'UPCOMING'
+          WHEN ${today}::date > t."endDate" THEN 'COMPLETED'
           ELSE 'ONGOING'
         END AS resolved_status
-      FROM "Trip"
-      WHERE "userId" = ${userId}
+      FROM "Trip" t
+      JOIN "Country" c ON c.cca2 = t."countryCode"
+      WHERE t."userId" = ${userId}
     ) resolved
   `;
 

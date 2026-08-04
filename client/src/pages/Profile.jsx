@@ -10,6 +10,7 @@ import { getCountry } from '../lib/countries.js';
 import { localizedCountryName } from '../lib/countryName.js';
 import { updateProfileSchema, changePasswordSchema } from '../schemas/profile.js';
 import { zodFieldErrors } from '../lib/zodFieldErrors.js';
+import { ACHIEVEMENTS } from '../lib/achievements.js';
 
 const ALLOWED_AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
@@ -287,6 +288,43 @@ export default function Profile() {
             </div>
           </div>
         )}
+
+        <div className="flex-1">
+          <h2 className="text-heading lg:text-heading-lg font-medium text-ink">
+            {t('profile.achievements.heading')}
+          </h2>
+          {stats && (
+            <>
+              <p className="mt-1 text-muted">
+                {t('profile.achievements.unlockedCount', {
+                  unlocked: ACHIEVEMENTS.filter((a) => a.check(stats)).length,
+                  total: ACHIEVEMENTS.length,
+                })}
+              </p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {ACHIEVEMENTS.map((a) => {
+                  const earned = a.check(stats);
+                  return (
+                    <div
+                      key={a.id}
+                      title={t(`profile.achievements.${a.id}.description`)}
+                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 ${
+                        earned ? 'border-ink' : 'border-hairline'
+                      }`}
+                    >
+                      <span
+                        className={`h-2 w-2 shrink-0 rounded-full ${earned ? 'bg-status-upcoming' : 'bg-hairline'}`}
+                      />
+                      <span className={earned ? 'text-ink' : 'text-muted'}>
+                        {t(`profile.achievements.${a.id}.name`)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {showPasswordModal && (
