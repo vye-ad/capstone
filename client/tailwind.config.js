@@ -28,6 +28,16 @@ export default {
         heading: ['22px', { lineHeight: '1.3' }],
         body: ['17px', { lineHeight: '1.5' }],
         utility: ['15px', { lineHeight: '1.4' }],
+        // Desktop-only 1.5x versions of the same four roles, applied with a
+        // `lg:` prefix. Deliberately separate keys rather than a bigger root
+        // rem so this only touches font-size — Tailwind's spacing/width
+        // scale (gap-*, w-*, px-*, including the lg:w-72/lg:w-96 tuning on
+        // Country detail) is rem-based off the *root* element, and changing
+        // that would have scaled layout along with text.
+        'wordmark-lg': ['48px', { lineHeight: '1.2' }],
+        'heading-lg': ['33px', { lineHeight: '1.3' }],
+        'body-lg': ['25.5px', { lineHeight: '1.5' }],
+        'utility-lg': ['22.5px', { lineHeight: '1.4' }],
       },
     },
   },

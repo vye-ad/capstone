@@ -46,7 +46,7 @@ export default function SignUp() {
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-8 px-4 py-8">
-      <Link to="/" className="w-full text-left text-wordmark text-ink">
+      <Link to="/" className="w-full text-left text-wordmark lg:text-wordmark-lg text-ink">
         xpdtr
       </Link>
       <StaticGlobe />
@@ -60,7 +60,7 @@ export default function SignUp() {
             aria-label={t('auth.name')}
             className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
-          {fieldErrors.name && <p className="text-utility text-danger">{fieldErrors.name}</p>}
+          {fieldErrors.name && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.name}</p>}
         </label>
         <label className="flex flex-col gap-1">
           <input
@@ -71,7 +71,7 @@ export default function SignUp() {
             aria-label={t('auth.email')}
             className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
-          {fieldErrors.email && <p className="text-utility text-danger">{fieldErrors.email}</p>}
+          {fieldErrors.email && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.email}</p>}
         </label>
         <label className="flex flex-col gap-1">
           <input
@@ -82,7 +82,7 @@ export default function SignUp() {
             aria-label={t('auth.password')}
             className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 placeholder:text-muted"
           />
-          {fieldErrors.password && <p className="text-utility text-danger">{fieldErrors.password}</p>}
+          {fieldErrors.password && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.password}</p>}
         </label>
         <label className="flex flex-col gap-1">
           <CountrySelect
@@ -92,7 +92,7 @@ export default function SignUp() {
             placeholder={t('auth.country')}
           />
           {fieldErrors.countryCode && (
-            <p className="text-utility text-danger">{fieldErrors.countryCode}</p>
+            <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.countryCode}</p>
           )}
         </label>
         {formError && <p className="text-danger">{formError}</p>}

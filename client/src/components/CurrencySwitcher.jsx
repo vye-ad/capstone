@@ -21,7 +21,7 @@ export default function CurrencySwitcher() {
       value={user.currency}
       onChange={handleChange}
       aria-label={t('countryDetail.currency')}
-      className="bg-transparent text-utility text-ink underline"
+      className="bg-transparent text-utility lg:text-utility-lg text-ink underline"
     >
       {SUPPORTED_CURRENCIES.map((c) => (
         <option key={c} value={c}>

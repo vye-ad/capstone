@@ -14,3 +14,12 @@ body {
      explicit size class, so this is what actually sets it site-wide. */
   font-size: 17px;
 }
+
+/* Desktop fonts 50% bigger, by request. Scoped to `body` (not `html`) so it
+   only affects font-size via inheritance — Tailwind's spacing/width scale
+   is rem-based off the root `html` element, so this doesn't touch layout. */
+@media (min-width: 1024px) {
+  body {
+    font-size: 25.5px;
+  }
+}

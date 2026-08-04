@@ -166,7 +166,7 @@ export default function CreateEditTrip() {
               onChange={(v) => setField('countryCode', v)}
               placeholder={t('createTrip.chooseDestination')}
             />
-            {fieldErrors.countryCode && <p className="text-utility text-danger">{fieldErrors.countryCode}</p>}
+            {fieldErrors.countryCode && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.countryCode}</p>}
           </label>
 
           <div className="flex gap-4">
@@ -178,7 +178,7 @@ export default function CreateEditTrip() {
                 onChange={(e) => setField('startDate', e.target.value)}
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
-              {fieldErrors.startDate && <p className="text-utility text-danger">{fieldErrors.startDate}</p>}
+              {fieldErrors.startDate && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.startDate}</p>}
             </label>
             <label className="flex flex-1 flex-col gap-1">
               <span className="text-muted">{t('createTrip.endDay')}</span>
@@ -188,7 +188,7 @@ export default function CreateEditTrip() {
                 onChange={(e) => setField('endDate', e.target.value)}
                 className="border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
-              {fieldErrors.endDate && <p className="text-utility text-danger">{fieldErrors.endDate}</p>}
+              {fieldErrors.endDate && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.endDate}</p>}
             </label>
           </div>
 
@@ -211,7 +211,7 @@ export default function CreateEditTrip() {
                 </label>
               ))}
             </div>
-            {fieldErrors.status && <p className="text-utility text-danger">{fieldErrors.status}</p>}
+            {fieldErrors.status && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.status}</p>}
           </div>
 
           <label className="flex flex-col gap-1">
@@ -240,9 +240,9 @@ export default function CreateEditTrip() {
                 className="flex-1 border-b border-hairline bg-transparent py-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               />
             </div>
-            {fieldErrors.budgetAmount && <p className="text-utility text-danger">{fieldErrors.budgetAmount}</p>}
+            {fieldErrors.budgetAmount && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.budgetAmount}</p>}
             {fieldErrors.budgetCurrency && (
-              <p className="text-utility text-danger">{fieldErrors.budgetCurrency}</p>
+              <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.budgetCurrency}</p>
             )}
           </label>
         </div>
@@ -263,7 +263,7 @@ export default function CreateEditTrip() {
               ))}
             </select>
             {fieldErrors.transportType && (
-              <p className="text-utility text-danger">{fieldErrors.transportType}</p>
+              <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.transportType}</p>
             )}
           </label>
 
@@ -282,7 +282,7 @@ export default function CreateEditTrip() {
               ))}
             </select>
             {fieldErrors.accommodationType && (
-              <p className="text-utility text-danger">{fieldErrors.accommodationType}</p>
+              <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.accommodationType}</p>
             )}
           </label>
 
@@ -295,7 +295,7 @@ export default function CreateEditTrip() {
               rows={4}
               className="border border-hairline bg-transparent p-2 text-ink outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
             />
-            {fieldErrors.notes && <p className="text-utility text-danger">{fieldErrors.notes}</p>}
+            {fieldErrors.notes && <p className="text-utility lg:text-utility-lg text-danger">{fieldErrors.notes}</p>}
           </label>
         </div>
         </div>

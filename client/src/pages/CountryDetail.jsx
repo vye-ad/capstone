@@ -62,7 +62,7 @@ export default function CountryDetail() {
     <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.explore')} />
 
-      <div className="flex items-center gap-2 text-heading font-medium text-ink">
+      <div className="flex items-center gap-2 text-heading lg:text-heading-lg font-medium text-ink">
         <img src={country.flagSvgUrl} alt="" className="h-4 w-6" />
         <span>{localizedCountryName(country, i18n.language)}</span>
       </div>
@@ -79,7 +79,7 @@ export default function CountryDetail() {
           />
         </div>
 
-        <div className="flex-1 text-lg">
+        <div className="flex-1 text-lg lg:text-[27px]">
           <div className="flex flex-col gap-3">
             <p className="text-ink">
               {t('countryDetail.language')}: {languages}
@@ -99,7 +99,7 @@ export default function CountryDetail() {
           <div className="mt-10 flex gap-16">
             {hasCities && (
               <div>
-                <h3 className="text-heading font-medium text-ink">{t('countryDetail.mainCities')}</h3>
+                <h3 className="text-heading lg:text-heading-lg font-medium text-ink">{t('countryDetail.mainCities')}</h3>
                 <ul>
                   {country.cities.map((city) => (
                     <li key={city.id} className="text-muted">
@@ -111,7 +111,7 @@ export default function CountryDetail() {
             )}
             {hasAttractions && (
               <div>
-                <h3 className="text-heading font-medium text-ink">{t('countryDetail.topAttractions')}</h3>
+                <h3 className="text-heading lg:text-heading-lg font-medium text-ink">{t('countryDetail.topAttractions')}</h3>
                 <ul>
                   {country.attractions.map((attraction) => (
                     <li key={attraction.id} className="text-muted">

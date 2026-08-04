@@ -58,17 +58,17 @@ export default function Home() {
   return (
     <main className="flex h-screen flex-col overflow-hidden px-4 py-6">
       <div className="flex items-center justify-between py-2">
-        <Link to="/home" className="text-wordmark text-ink">
+        <Link to="/home" className="text-wordmark lg:text-wordmark-lg text-ink">
           xpdtr
         </Link>
         <HeaderMenu>
           {user.role === 'ADMIN' && (
-            <Link to="/admin" className="text-utility text-ink underline">
+            <Link to="/admin" className="text-utility lg:text-utility-lg text-ink underline">
               {t('pages.admin')}
             </Link>
           )}
           <LocaleCurrencySwitcher />
-          <button type="button" onClick={logout} className="text-utility text-ink underline">
+          <button type="button" onClick={logout} className="text-utility lg:text-utility-lg text-ink underline">
             {t('common.signOut')}
           </button>
         </HeaderMenu>
@@ -87,7 +87,7 @@ export default function Home() {
         <Link to="/trips" className="text-ink underline">
           {t('home.nav.myTrips')}
         </Link>
-        <Link to="/trips/new" className="text-xl text-ink underline">
+        <Link to="/trips/new" className="text-xl lg:text-[30px] text-ink underline">
           +
         </Link>
       </div>
@@ -107,7 +107,7 @@ export default function Home() {
             {t('home.nav.myTrips')}
           </Link>
           <div />
-          <Link to="/trips/new" className="text-xl text-ink underline">
+          <Link to="/trips/new" className="text-xl lg:text-[30px] text-ink underline">
             +
           </Link>
           <div />

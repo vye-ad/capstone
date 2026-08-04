@@ -53,7 +53,7 @@ export default function Explore() {
       <div className="mt-8 flex gap-8 lg:min-h-[28rem]">
         <div className="flex-1">
           {!showingSearch && (
-            <h2 className="mb-4 text-heading font-medium text-ink">{t('explore.featuredDestinations')}</h2>
+            <h2 className="mb-4 text-heading lg:text-heading-lg font-medium text-ink">{t('explore.featuredDestinations')}</h2>
           )}
           {loading ? (
             <p className="text-muted">{t('common.loading')}</p>

@@ -104,7 +104,7 @@ export default function MyTrips() {
               />
             ))}
           </div>
-          {isStale && <p className="mt-2 text-utility text-danger">* {t('common.staleRate')}</p>}
+          {isStale && <p className="mt-2 text-utility lg:text-utility-lg text-danger">* {t('common.staleRate')}</p>}
         </div>
       )}
 
