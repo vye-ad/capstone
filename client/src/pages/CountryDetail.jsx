@@ -126,16 +126,18 @@ export default function CountryDetail() {
 
         {country.latitude != null && country.longitude != null && (
           <div className="flex items-center justify-center lg:w-[524px]">
-            <GlobeView
-              mode="country"
-              size={420}
-              country={{
-                cca3: country.cca3,
-                nameEn: country.nameEn,
-                latitude: country.latitude,
-                longitude: country.longitude,
-              }}
-            />
+            <div className="lg:-translate-x-[15%]">
+              <GlobeView
+                mode="country"
+                size={420}
+                country={{
+                  cca3: country.cca3,
+                  nameEn: country.nameEn,
+                  latitude: country.latitude,
+                  longitude: country.longitude,
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
