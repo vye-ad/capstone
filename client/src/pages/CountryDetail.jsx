@@ -70,12 +70,12 @@ export default function CountryDetail() {
       {/* picture / info / globe — the third (globe) column is §14's
           progressive enhancement; falls back to the static globe (narrow
           viewport / reduced motion / no WebGL / no coordinates). */}
-      <div className="mt-6 flex flex-col gap-8 lg:flex-row">
-        <div className="lg:w-72">
+      <div className="mt-6 flex flex-col gap-12 lg:flex-row">
+        <div className="lg:w-[346px]">
           <img
             src={country.imageUrl}
             alt={localizedCountryName(country, i18n.language)}
-            className="aspect-[2/3] w-full rounded object-cover"
+            className="aspect-[2/3] w-full rounded-3xl object-cover"
           />
         </div>
 
