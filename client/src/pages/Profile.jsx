@@ -143,7 +143,7 @@ export default function Profile() {
     <main className="min-h-screen px-4 py-6">
       <PageHeader page={t('pages.profile')} />
 
-      <div className="mt-6 flex flex-col gap-8 lg:flex-row">
+      <div className="mt-4 flex flex-col gap-8 lg:flex-row">
         <div className="flex flex-col items-center gap-2 lg:items-start">
           {user.avatarUrl ? (
             <img
@@ -181,7 +181,7 @@ export default function Profile() {
           )}
           {avatarError && <p className="text-utility lg:text-utility-lg text-danger">{avatarError}</p>}
 
-          <div className="mt-6">
+          <div className="mt-4">
             <h2 className="text-heading lg:text-heading-lg font-medium text-ink">{t('profile.travelStatistics')}</h2>
             {stats && (
               <dl className="mt-2 flex flex-col gap-1 text-muted">
@@ -301,14 +301,19 @@ export default function Profile() {
                   total: ACHIEVEMENTS.length,
                 })}
               </p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {/* flex-wrap + inline-block sizing (not a grid) so each pill is
+                  only as wide as its own text — narrower than a fixed grid
+                  column, and lets more of them pack per row. text-utility is
+                  a fixed size rather than inherited body text, so pills stay
+                  compact instead of wrapping at the desktop 25.5px scale. */}
+              <div className="mt-3 flex flex-wrap gap-4">
                 {ACHIEVEMENTS.map((a) => {
                   const earned = a.check(stats);
                   return (
                     <div
                       key={a.id}
                       title={t(`profile.achievements.${a.id}.description`)}
-                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 ${
+                      className={`flex items-center gap-2 rounded-pill border px-3 py-1.5 text-utility ${
                         earned ? 'border-ink' : 'border-hairline'
                       }`}
                     >
